@@ -1,0 +1,24 @@
+import { defineStore } from "pinia";
+import { useFeatureStore } from "./featureStore";
+const Features = useFeatureStore();
+
+export const useGlobalStore = defineStore('globalStore', {
+    state: () => ({
+        sollTemp: 0,
+        istTemp: 0,
+        sollRain: 0,
+        istRain: 0,
+        sollHumid: 0,
+        istHumid: 0,
+        showPopup: false as boolean
+    }),
+    actions: ({
+        TogglePopup(actionname: string) {
+            for (const a of Features.Features) {
+                if (a.name == actionname) {
+                    a.PUactive == !a.PUactive
+                }
+            }
+        }
+    })
+})
