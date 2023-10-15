@@ -3,7 +3,12 @@
     <div class="popup">
         <div class="popup-inner">
             <slot />
-            <h1> {{ Global.activePopup }}</h1>
+            <h3> {{ Global.activePopup }}</h3>
+            <Inner></Inner>
+            <br>
+            <button class="popup-close" @click="Global.TogglePopup(actionName)">
+                Confirm
+            </button>
             <button class="popup-close" @click="Global.TogglePopup(actionName)">
                 &times;
             </button>
@@ -13,12 +18,11 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import Inner from './PopUpContent.vue'
 import { useFeatureStore } from '../stores/featureStore'
 import { useGlobalStore } from '../stores/globalStore'
 const featureStore = useFeatureStore()
 const Global = useGlobalStore()
-console.log(Global.showPopup)
-console.log(Global.activePopup)
 defineProps({ actionName: { type: String, required: true } })
 
 </script>
@@ -39,7 +43,7 @@ defineProps({ actionName: { type: String, required: true } })
 
     .popup-inner {
         background: #FFF;
-        padding: 32px;
+        padding: 20px;
     }
 }
 </style>

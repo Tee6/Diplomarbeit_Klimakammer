@@ -17,6 +17,7 @@ import { useGlobalStore } from '@/stores/globalStore';
 const Features = useFeatureStore()
 const Global = useGlobalStore()
 
+Global.PopUpType = 'auto'
 
 </script>
 
