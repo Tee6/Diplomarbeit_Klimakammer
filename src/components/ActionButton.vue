@@ -1,7 +1,5 @@
 <template>
-    <button @click="() => Global.TogglePopup(actionName)">{{ actionName }}</button>
-    <PopUp action-name="acitonName" v-if="Global.showPopup">{{ actionName }}
-    </PopUp>
+    <button @click="() => activatePopup(actionName)">{{ actionName }}</button>
 </template>
 
 <script lang="ts" setup>
@@ -12,6 +10,11 @@ import { useFeatureStore } from '../stores/featureStore'
 import { useGlobalStore } from '../stores/globalStore'
 const featureStore = useFeatureStore()
 const Global = useGlobalStore()
+
+function activatePopup(actionName: string) {
+    Global.activePopup = actionName
+    Global.TogglePopup(actionName)
+}
 
 defineProps({ actionName: { type: String, required: true } })
 /* eslint-disable */

@@ -3,6 +3,7 @@
     <div class="popup">
         <div class="popup-inner">
             <slot />
+            <h1> {{ Global.activePopup }}</h1>
             <button class="popup-close" @click="Global.TogglePopup(actionName)">
                 &times;
             </button>
@@ -16,7 +17,8 @@ import { useFeatureStore } from '../stores/featureStore'
 import { useGlobalStore } from '../stores/globalStore'
 const featureStore = useFeatureStore()
 const Global = useGlobalStore()
-
+console.log(Global.showPopup)
+console.log(Global.activePopup)
 defineProps({ actionName: { type: String, required: true } })
 
 </script>
