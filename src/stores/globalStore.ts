@@ -12,11 +12,14 @@ export const useGlobalStore = defineStore('globalStore', {
         istHumid: 0,
         showPopup: false as boolean,
         activePopup: '' as string,
-        PopUpType: 'auto' as string
+        PopUpType: 'auto' as string,
     }),
     actions: ({
-        TogglePopup(actionname: string) {
+        TogglePopup() {
             this.showPopup = !this.showPopup
+        },
+        closePopup() {
+            this.showPopup = false
         }
     })
 })

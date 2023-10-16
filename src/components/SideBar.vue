@@ -14,7 +14,8 @@
     z-index: 0;
     top: 0;
     left: 0;
-    background-color: #1b3b10;
+    background-color: #176c28;
+    background-image: radial-gradient(100% 100% at 100% 0, #066d28 10%, #0a4215 100%);
     overflow-x: hidden;
     padding-top: 20px;
     z-index: 1;
