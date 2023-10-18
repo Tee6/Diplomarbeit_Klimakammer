@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <a class="title">Klimakammer</a> |
+        <router-link class="title" to="/main">Klimakammer</router-link> |
         <router-link :class="{ activeTab: Global.PopUpType == 'auto' }" class="navlink button-28" role="button"
             to="/auto">Auto
         </router-link> |
@@ -45,6 +45,8 @@ nav a.router-link-exact-active {
     padding: 10px;
     font-size: 25px;
     font-family: serif;
+    text-decoration: none;
+    color: black;
 }
 
 .navlink {
@@ -81,7 +83,7 @@ nav a.router-link-exact-active {
     transform: translateY(-2px);
 }
 
-.button-28:active {
+.button-28:active title:active {
     transform: translateY(0);
 }
 </style>

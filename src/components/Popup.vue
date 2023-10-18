@@ -6,14 +6,15 @@
             <h3> {{ Global.activePopup }}</h3>
             <form>
                 <label> {{ val_name + ' ' }} </label>
-                <input value="value" type="number" placeholder="..." />
+                <input type="number" placeholder="..." v-model="FormValue1" />
+
                 <div v-show="Global.PopUpType == 'auto'" style="margin-top: 15px;">
                     <label> Time after Start in minutes </label>
-                    <input value="time" id="test" type="number" placeholder="...">
+                    <input id="test" type="number" placeholder="..." v-model="FormTime">
                 </div>
             </form>
             <br>
-            <button class="button-23 confirm-btn" role="button" @click="Global.Confirm()">
+            <button class="button-23 confirm-btn" role="button" @click="Confirm()">
                 Confirm
             </button>
             <button class="button-23 close-btn" role="button" @click="Global.TogglePopup()">
@@ -24,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, toValue } from 'vue'
 import { defineProps } from 'vue'
 import Inner from '@/components/PopUpContent.vue'
 import { useFeatureStore } from '@/stores/featureStore'
@@ -31,14 +33,26 @@ import { useGlobalStore } from '@/stores/globalStore'
 const featureStore = useFeatureStore()
 const Global = useGlobalStore()
 let val_name: string
+let val_ID: number
 
-
+let FormValue1: number
+let FormTime: number
 function findFeature() {
     for (const k of featureStore.Features) {
         if (k.name == Global.activePopup) {
             val_name = k.value_name
+            val_ID = k.id
         }
     }
+}
+function Confirm() {
+    Global.TogglePopup()
+    let ObjClone = { ...featureStore.Features[val_ID] }
+    ObjClone.id = Number(ObjClone.id)
+    ObjClone.value = FormValue1
+    ObjClone.time = FormTime
+    Global.ActionList.push(ObjClone)
+    console.log(ObjClone)
 }
 findFeature()
 defineProps({ actionName: { type: String, required: true } })

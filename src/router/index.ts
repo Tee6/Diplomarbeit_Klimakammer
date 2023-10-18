@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import auto from '../views/AutoPage.vue'
 import manu from '../views/ManuPage.vue'
+import main from '@/views/MainPage.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,6 +13,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/manu',
     name: 'manu',
     component: manu
+  },
+  {
+    path: '/main',
+    name: 'main',
+    component: main
   }
 ]
 

@@ -1,9 +1,14 @@
 <template>
     <div class="sidenav">
-
+        <ListItem v-for="a of Global.ActionList" :-feature-name="a.name" :-time-value="a.time" :-value-name="a.value">
+        </ListItem>
     </div>
 </template>
-
+<script setup lang="ts">
+import ListItem from './ListItem.vue';
+import { useGlobalStore } from '@/stores/globalStore';
+const Global = useGlobalStore()
+</script>
 <style>
 .sidenav {
     border: 2px solid #000;
