@@ -44,6 +44,7 @@ nav a.router-link-exact-active {
 .title {
     padding: 10px;
     font-size: 25px;
+    font-family: serif;
 }
 
 .navlink {

@@ -1,10 +1,10 @@
 <template>
     <form>
         <label> {{ val_name + ' ' }} </label>
-        <input type="number" placeholder="...">
-        <div v-show="Global.PopUpType == 'auto'">
+        <input value="value" type="number" placeholder="..." />
+        <div v-show="Global.PopUpType == 'auto'" style="margin-top: 15px;">
             <label> Time after Start in minutes </label>
-            <input id="test" type="number" placeholder="...">
+            <input value="time" id="test" type="number" placeholder="...">
         </div>
     </form>
 </template>
@@ -17,14 +17,6 @@ const featureStore = useFeatureStore()
 const Global = useGlobalStore()
 
 let val_name: string
-
-function addMinSuffix(input: any) {
-    console.log(input)
-    const value = input.value.trim();
-    if (value !== '') {
-        input.value = value + ' min';
-    }
-}
 
 
 function findFeature() {

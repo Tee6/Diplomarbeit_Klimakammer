@@ -13,6 +13,7 @@ export const useGlobalStore = defineStore('globalStore', {
         showPopup: false as boolean,
         activePopup: '' as string,
         PopUpType: 'auto' as string,
+        ActionList: [{ id: Number, Name: String, value: Number, time: Number }]
     }),
     actions: ({
         TogglePopup() {
@@ -20,6 +21,8 @@ export const useGlobalStore = defineStore('globalStore', {
         },
         closePopup() {
             this.showPopup = false
+        }, Confirm() {
+            this.TogglePopup()
         }
     })
 })

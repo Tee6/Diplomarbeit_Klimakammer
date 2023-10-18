@@ -4,9 +4,16 @@
         <div class="popup-inner">
             <slot />
             <h3> {{ Global.activePopup }}</h3>
-            <Inner></Inner>
+            <form>
+                <label> {{ val_name + ' ' }} </label>
+                <input value="value" type="number" placeholder="..." />
+                <div v-show="Global.PopUpType == 'auto'" style="margin-top: 15px;">
+                    <label> Time after Start in minutes </label>
+                    <input value="time" id="test" type="number" placeholder="...">
+                </div>
+            </form>
             <br>
-            <button class="button-23 confirm-btn" role="button" @click="Global.TogglePopup()">
+            <button class="button-23 confirm-btn" role="button" @click="Global.Confirm()">
                 Confirm
             </button>
             <button class="button-23 close-btn" role="button" @click="Global.TogglePopup()">
@@ -23,6 +30,17 @@ import { useFeatureStore } from '@/stores/featureStore'
 import { useGlobalStore } from '@/stores/globalStore'
 const featureStore = useFeatureStore()
 const Global = useGlobalStore()
+let val_name: string
+
+
+function findFeature() {
+    for (const k of featureStore.Features) {
+        if (k.name == Global.activePopup) {
+            val_name = k.value_name
+        }
+    }
+}
+findFeature()
 defineProps({ actionName: { type: String, required: true } })
 
 </script>
@@ -37,6 +55,8 @@ defineProps({ actionName: { type: String, required: true } })
     z-index: 99;
     background-color: rgba(0, 0, 0, 0.2);
 
+
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,6 +64,18 @@ defineProps({ actionName: { type: String, required: true } })
     .popup-inner {
         background: #FFF;
         padding: 20px;
+        border-style: solid;
+        border-width: 5px;
+        background: radial-gradient(circle at 100% 100%, #ffffff 0, #ffffff 9px, transparent 9px) 0% 0%/13px 13px no-repeat,
+            radial-gradient(circle at 0 100%, #ffffff 0, #ffffff 9px, transparent 9px) 100% 0%/13px 13px no-repeat,
+            radial-gradient(circle at 100% 0, #ffffff 0, #ffffff 9px, transparent 9px) 0% 100%/13px 13px no-repeat,
+            radial-gradient(circle at 0 0, #ffffff 0, #ffffff 9px, transparent 9px) 100% 100%/13px 13px no-repeat,
+            linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 8px) calc(100% - 26px) no-repeat,
+            linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 26px) calc(100% - 8px) no-repeat,
+            conic-gradient(from -141deg at 1% 90%, #91ffa0 0%, #033a0a 100%) 29% 15%/199% 190%;
+        border-radius: 13px;
+        padding: 10px;
+        box-sizing: border-box;
     }
 }
 
@@ -93,6 +125,7 @@ defineProps({ actionName: { type: String, required: true } })
 
 .confirm-btn {
     padding: 8px;
+    margin-bottom: 20px;
 }
 
 .close-btn {
