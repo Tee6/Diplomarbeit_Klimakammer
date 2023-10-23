@@ -48,11 +48,15 @@ function findFeature() {
 function Confirm() {
     Global.TogglePopup()
     let ObjClone = { ...featureStore.Features[val_ID] }
-    ObjClone.id = Number(ObjClone.id)
+    ObjClone.name = Global.activePopup
+    ObjClone.id = Global.ActionList.length + 1
+    ObjClone.value_name = val_name
     ObjClone.value = FormValue1
     ObjClone.time = FormTime
     Global.ActionList.push(ObjClone)
-    console.log(ObjClone)
+    console.log('Added Object: ' + ObjClone.name)
+    console.log('Action List:')
+    console.log(Global.ActionList)
 }
 findFeature()
 defineProps({ actionName: { type: String, required: true } })

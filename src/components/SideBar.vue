@@ -1,6 +1,7 @@
 <template>
-    <div class="sidenav">
-        <ListItem v-for="a of Global.ActionList" :-feature-name="a.name" :-time-value="a.time" :-value-name="a.value">
+    <div class="sidenav" style="margin-top: 100px;">
+        <ListItem v-if="Global.ActionList.length > 0" v-for="a of Global.ActionList" :-feat="a"
+            :key="Global.ActionList.length">
         </ListItem>
     </div>
 </template>

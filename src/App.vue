@@ -1,20 +1,20 @@
 <template>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <Navbar></Navbar>
-  <sidebar></sidebar>
+  <sidebar :key="Global.ActionList.length"></sidebar>
   <router-view />
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
 import Navbar from '@/components/NavBar.vue'
 import sidebar from '@/components/SideBar.vue'
 import { useFeatureStore } from '@/stores/featureStore'
-import { useGlobalStore } from './stores/globalStore';
 const featureStore = useFeatureStore()
+import { useGlobalStore } from './stores/globalStore';
 const Global = useGlobalStore()
 
 Global.PopUpType == 'welcome'
+
 </script>
 
 <style>
