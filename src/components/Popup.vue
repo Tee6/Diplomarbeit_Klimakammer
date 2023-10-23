@@ -3,14 +3,15 @@
     <div class="popup">
         <div class="popup-inner">
             <slot />
-            <h3> {{ Global.activePopup }}</h3>
+            <h3 style="margin: 10px; text-align: left; text-decoration: solid; text-decoration-line: underline;"> {{
+                Global.activePopup }}</h3>
             <form>
                 <label> {{ val_name + ' ' }} </label>
-                <input type="number" placeholder="..." v-model="FormValue1" />
+                <input type="number" placeholder="%" v-model="FormValue1" />
 
                 <div v-show="Global.PopUpType == 'auto'" style="margin-top: 15px;">
                     <label> Time after Start in minutes </label>
-                    <input id="test" type="number" placeholder="..." v-model="FormTime">
+                    <input id="test" type="time" v-model="FormTime">
                 </div>
             </form>
             <br>
@@ -36,7 +37,7 @@ let val_name: string
 let val_ID: number
 
 let FormValue1: number
-let FormTime: number
+let FormTime: string
 function findFeature() {
     for (const k of featureStore.Features) {
         if (k.name == Global.activePopup) {
@@ -46,17 +47,32 @@ function findFeature() {
     }
 }
 function Confirm() {
-    Global.TogglePopup()
-    let ObjClone = { ...featureStore.Features[val_ID] }
-    ObjClone.name = Global.activePopup
-    ObjClone.id = Global.ActionList.length + 1
-    ObjClone.value_name = val_name
-    ObjClone.value = FormValue1
-    ObjClone.time = FormTime
-    Global.ActionList.push(ObjClone)
-    console.log('Added Object: ' + ObjClone.name)
-    console.log('Action List:')
-    console.log(Global.ActionList)
+    if (!(0 <= FormValue1 && FormValue1 <= 100)) {
+        alert('Enter a Value between 0 and 100 for the Value')
+        return
+    }
+    if (Global.Edittype == 'edit') {
+        const foundObject = Global.ActionList.find(obj => obj.id === Global.ActionID);
+        Global.Edittype = 'add'
+    } else {
+        let minutes = FormTime.split(':')
+        let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
+        Global.TogglePopup()
+        let ObjClone = { ...featureStore.Features[val_ID] }
+        ObjClone.name = Global.activePopup
+        ObjClone.id = Global.ActionList.length + 1
+        ObjClone.value_name = val_name
+        ObjClone.value = FormValue1
+        ObjClone.time = realminutes
+        ObjClone.timeString = FormTime
+        Global.ActionList.push(ObjClone)
+        console.log('Added Object: ' + ObjClone.name)
+        console.log('Action List:')
+        console.log(Global.ActionList)
+        Global.ActionList.sort(function (a, b) {
+            return a.time - b.time;
+        });
+    }
 }
 findFeature()
 defineProps({ actionName: { type: String, required: true } })
@@ -64,6 +80,10 @@ defineProps({ actionName: { type: String, required: true } })
 </script>
 
 <style scoped>
+form {
+    padding: 20px;
+}
+
 .popup {
     position: fixed;
     top: 0;
@@ -92,7 +112,6 @@ defineProps({ actionName: { type: String, required: true } })
             linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 26px) calc(100% - 8px) no-repeat,
             conic-gradient(from -141deg at 1% 90%, #91ffa0 0%, #033a0a 100%) 29% 15%/199% 190%;
         border-radius: 13px;
-        padding: 10px;
         box-sizing: border-box;
     }
 }
@@ -121,6 +140,7 @@ defineProps({ actionName: { type: String, required: true } })
     user-select: none;
     -webkit-user-select: none;
     width: auto;
+    letter-spacing: 1px;
 }
 
 .button-23:focus-visible {

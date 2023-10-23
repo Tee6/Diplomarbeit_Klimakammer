@@ -14,16 +14,19 @@ import { useGlobalStore } from './stores/globalStore';
 const Global = useGlobalStore()
 
 Global.PopUpType == 'welcome'
-
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap');
+
 #app {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+
+  overflow: hidden;
 
   display: grid;
   grid-template-areas:

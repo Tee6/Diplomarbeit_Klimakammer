@@ -24,7 +24,7 @@ console.log(Features.Features)
 
 <style>
 .button-grid {
-  width: 1600px;
+  width: 1100px;
   display: flex;
   flex-wrap: wrap;
   font-size: 18px;

@@ -1,9 +1,9 @@
 <template>
-    <div class="listitem">
+    <div class="listitem" @click="test(Feat.id)">
         <h2 class="FeatName">{{ Feat.name }}</h2>
         <div>
             <p class="Vals">{{ Feat.value_name }}: {{ Feat.value }}</p>
-            <p class="Vals">Time: +{{ Feat.time }}</p>
+            <p class="Vals">Time: +{{ Feat.timeString }}h</p>
         </div>
     </div>
 </template>
@@ -15,14 +15,36 @@ const Global = useGlobalStore()
 
 console.log('List Object created')
 
+function test(featID: number) {
+    Global.TogglePopup()
+    Global.Edittype = 'edit'
+}
 defineProps<{ Feat: Feature }>()
 </script>
 
 <style scoped>
+@keyframes FadeIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .listitem {
+    animation: FadeIn 1s ease 0s 1 normal forwards;
+    -webkit-box-shadow: 10px 5px 10px 1px rgba(0, 0, 0, 0.27);
+    -moz-box-shadow: 10px 5px 10px 1px rgba(0, 0, 0, 0.27);
+    box-shadow: 10px 5px 10px 1px rgba(0, 0, 0, 0.27);
     border: 5px solid #ffffff;
     border-radius: 10px;
-    margin: 10px;
+    margin-bottom: 11px;
+    margin-left: 10px;
+    margin-right: 10px;
     padding-left: 10px;
     padding-right: 10px;
     color: white;
@@ -31,7 +53,7 @@ defineProps<{ Feat: Feature }>()
     justify-content: space-between;
     align-items: center;
 
-    background-color: green;
+    background-color: #236326;
 }
 
 .FeatName {

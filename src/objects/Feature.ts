@@ -3,7 +3,8 @@ export interface Feature {
     name: string,
     value_name: string,
     value: number,
-    time: number
+    time: number,
+    timeString: string
 }
 
 export const Sonne: Feature = {
@@ -12,6 +13,7 @@ export const Sonne: Feature = {
     value_name: 'Intensität',
     value: 0,
     time: 0,
+    timeString: '00:00'
 };
 
 export const Regen: Feature = {
@@ -20,6 +22,7 @@ export const Regen: Feature = {
     value_name: 'Intensität',
     value: 0,
     time: 0,
+    timeString: '00:00'
 };
 
 export const Luftfeuchtigkeit: Feature = {
@@ -28,6 +31,7 @@ export const Luftfeuchtigkeit: Feature = {
     value_name: 'Prozent',
     value: 0,
     time: 0,
+    timeString: '00:00'
 };
 
 export const Feat = [Sonne, Regen, Luftfeuchtigkeit]

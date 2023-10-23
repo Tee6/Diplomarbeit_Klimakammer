@@ -24,7 +24,6 @@ defineProps({ actionName: { type: String, required: true } })
     margin: 20px;
     padding: 10px 20px;
     font-size: 16px;
-    font-weight: bold;
     text-align: center;
     text-decoration: none;
     border: none;
@@ -54,7 +53,6 @@ defineProps({ actionName: { type: String, required: true } })
     color: #fff;
     cursor: pointer;
     display: inline-flex;
-    font-family: "JetBrains Mono", monospace;
     height: 48px;
     justify-content: center;
     line-height: 1;
@@ -73,6 +71,7 @@ defineProps({ actionName: { type: String, required: true } })
     will-change: box-shadow, transform;
     font-size: 18px;
     width: 10em;
+    letter-spacing: 1px;
 }
 
 .button-29:focus {

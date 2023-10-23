@@ -9,11 +9,10 @@ export const useFeatureStore = defineStore('featureStore', {
     }),
     actions: {
         Fill() {
-            //this.Features.push(Feat.Sonne)
-            //this.Features.push(Regen)
-            //this.Features.push(Luftfeuchtigkeit)
-            for (const a of Feat) {
-                this.Features.push(a)
+            if (this.Features.length < 1) {
+                for (const a of Feat) {
+                    this.Features.push(a)
+                }
             }
         }
     }

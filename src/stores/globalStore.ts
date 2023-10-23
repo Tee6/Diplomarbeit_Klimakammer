@@ -15,6 +15,8 @@ export const useGlobalStore = defineStore('globalStore', {
         showPopup: false as boolean,
         activePopup: '' as string,
         PopUpType: 'main' as string,
+        Edittype: 'add' as string,
+        ActionID: 0 as number,
         ActionList: [] as Feature[]
     }),
     actions: ({
@@ -23,6 +25,6 @@ export const useGlobalStore = defineStore('globalStore', {
         },
         closePopup() {
             this.showPopup = false
-        }
+        },
     })
 })
