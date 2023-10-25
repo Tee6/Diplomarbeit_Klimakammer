@@ -1,14 +1,19 @@
 /* eslint-disable */
 import { defineStore } from 'pinia'
+import { Feature } from '@/objects/Feature'
+import { Feat } from '@/objects/Feature'
 
 export const useFeatureStore = defineStore('featureStore', {
     state: () => ({
-        Features:
-            [
-                { id: 0, name: 'Sonne', value: 0 },
-                { id: 1, name: 'Regen', value: 0 },
-                { id: 2, name: 'Luftfeuchtigkeit', value: 0 }
-            ]
-    })
-
+        Features: [] as Feature[]
+    }),
+    actions: {
+        Fill() {
+            if (this.Features.length < 1) {
+                for (const a of Feat) {
+                    this.Features.push(a)
+                }
+            }
+        }
+    }
 })

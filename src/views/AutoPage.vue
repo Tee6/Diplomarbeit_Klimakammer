@@ -10,25 +10,27 @@
 </template>
 
 <script lang="ts" setup>
-import PopUp from '../components/Popup.vue'
-import ActionButton from '../components/ActionButton.vue'
-import { useFeatureStore } from '../stores/featureStore'
+import PopUp from '@/components/Popup.vue'
+import ActionButton from '@/components/ActionButton.vue'
+import { useFeatureStore } from '@/stores/featureStore'
 import { useGlobalStore } from '@/stores/globalStore';
 const Features = useFeatureStore()
 const Global = useGlobalStore()
 
-
+Global.PopUpType = 'auto'
+Features.Fill()
 </script>
 
 <style>
 .button-grid {
-  display: block;
+  width: 1100px;
+  display: flex;
+  flex-wrap: wrap;
   font-size: 18px;
   float: left;
 }
 
 .container {
-  border: 2px solid #000;
   margin-left: 392px;
 }
 </style>
