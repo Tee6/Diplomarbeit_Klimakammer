@@ -21,23 +21,27 @@
             <button class="button-23 close-btn" role="button" @click="Global.TogglePopup()">
                 &times;
             </button>
+            <button class="button-23 confirm-btn" role="button" @click="Confirm(true)">
+                Löschen
+            </button>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, toValue } from 'vue'
 import { defineProps } from 'vue'
-import Inner from '@/components/PopUpContent.vue'
 import { useFeatureStore } from '@/stores/featureStore'
-import { useGlobalStore } from '@/stores/globalStore'
 const featureStore = useFeatureStore()
+
+import { useGlobalStore } from '@/stores/globalStore'
 const Global = useGlobalStore()
+
 let val_name: string
 let val_ID: number
 
 let FormValue1: number
 let FormTime: string
+
 function findFeature() {
     for (const k of featureStore.Features) {
         if (k.name == Global.activePopup) {
@@ -46,32 +50,61 @@ function findFeature() {
         }
     }
 }
-function Confirm() {
-    if (!(0 <= FormValue1 && FormValue1 <= 100)) {
+function Confirm(del = false) {
+    if (del) {
+        const index = Global.ActionList.findIndex(obj => obj.id === Global.ActionID)
+        if (index !== undefined) {
+            Global.ActionList.splice(index, 1)
+        } else {
+            console.log('Object not found');
+        }
+        Global.Edittype = 'add'
+        Global.ActionID = 0
+        Global.showPopup = false
+        Global.TaskSort()
+        return
+    }
+
+    if (!(0 <= FormValue1 && FormValue1 <= 100) && FormValue1 !== undefined) {
         alert('Enter a Value between 0 and 100 for the Value')
         return
     }
-    if (Global.Edittype == 'edit') {
-        const foundObject = Global.ActionList.find(obj => obj.id === Global.ActionID);
-        Global.Edittype = 'add'
-    } else {
-        let minutes = FormTime.split(':')
-        let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
+    if (Global.Edittype == "add") {
         Global.TogglePopup()
         let ObjClone = { ...featureStore.Features[val_ID] }
         ObjClone.name = Global.activePopup
         ObjClone.id = Global.ActionList.length + 1
         ObjClone.value_name = val_name
         ObjClone.value = FormValue1
+        let minutes = FormTime.split(':')
+        let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
         ObjClone.time = realminutes
         ObjClone.timeString = FormTime
         Global.ActionList.push(ObjClone)
-        console.log('Added Object: ' + ObjClone.name)
-        console.log('Action List:')
-        console.log(Global.ActionList)
-        Global.ActionList.sort(function (a, b) {
-            return a.time - b.time;
-        });
+        Global.TaskSort()
+    }
+    if (Global.Edittype == 'edit') {
+        const index = Global.ActionList.findIndex(obj => obj.id === Global.ActionID)
+        if (index !== undefined) {
+            const foundObject = Global.ActionList[index]
+            if (FormValue1 !== undefined) {
+                foundObject.value = FormValue1;
+            }
+            if (FormTime !== undefined) {
+                let minutes = FormTime.split(':')
+                let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
+                foundObject.time = realminutes;
+            }
+            if (FormTime !== undefined) {
+                foundObject.timeString = FormTime;
+            }
+        } else {
+            console.log('Object not found');
+        }
+        Global.Edittype = 'add'
+        Global.ActionID = 0
+        Global.showPopup = false
+        Global.TaskSort()
     }
 }
 findFeature()
@@ -82,6 +115,18 @@ defineProps({ actionName: { type: String, required: true } })
 <style scoped>
 form {
     padding: 20px;
+}
+
+@keyframes PopUpFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(1.4);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .popup {
@@ -113,6 +158,7 @@ form {
             conic-gradient(from -141deg at 1% 90%, #91ffa0 0%, #033a0a 100%) 29% 15%/199% 190%;
         border-radius: 13px;
         box-sizing: border-box;
+        animation: PopUpFadeIn 0.5s ease 0s 1 normal none;
     }
 }
 
@@ -141,7 +187,9 @@ form {
     -webkit-user-select: none;
     width: auto;
     letter-spacing: 1px;
+    margin-left: 10px;
 }
+
 
 .button-23:focus-visible {
     box-shadow: #222222 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;

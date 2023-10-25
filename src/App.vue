@@ -8,8 +8,6 @@
 <script lang="ts" setup>
 import Navbar from '@/components/NavBar.vue'
 import sidebar from '@/components/SideBar.vue'
-import { useFeatureStore } from '@/stores/featureStore'
-const featureStore = useFeatureStore()
 import { useGlobalStore } from './stores/globalStore';
 const Global = useGlobalStore()
 

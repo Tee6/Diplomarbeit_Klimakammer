@@ -26,5 +26,10 @@ export const useGlobalStore = defineStore('globalStore', {
         closePopup() {
             this.showPopup = false
         },
+        TaskSort() {
+            this.ActionList.sort(function (a, b) {
+                return a.time - b.time;
+            });
+        }
     })
 })

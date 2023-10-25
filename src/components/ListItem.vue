@@ -13,10 +13,9 @@ import { Feature } from '@/objects/Feature';
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
 
-console.log('List Object created')
-
 function test(featID: number) {
     Global.TogglePopup()
+    Global.ActionID = featID
     Global.Edittype = 'edit'
 }
 defineProps<{ Feat: Feature }>()

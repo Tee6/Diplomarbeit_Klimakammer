@@ -3,12 +3,8 @@
 </template>
 
 <script lang="ts" setup>
-/* eslint-disable */
-import PopUp from './Popup.vue'
 import { defineProps } from 'vue'
-import { useFeatureStore } from '@/stores/featureStore'
 import { useGlobalStore } from '@/stores/globalStore'
-const featureStore = useFeatureStore()
 const Global = useGlobalStore()
 
 function activatePopup(actionName: string) {
@@ -72,6 +68,7 @@ defineProps({ actionName: { type: String, required: true } })
     font-size: 18px;
     width: 10em;
     letter-spacing: 1px;
+    animation: ActionButtonFadeIn 0.5s ease 0s 1 normal none;
 }
 
 .button-29:focus {
@@ -86,5 +83,17 @@ defineProps({ actionName: { type: String, required: true } })
 .button-29:active {
     box-shadow: #219c3a 0 3px 7px inset;
     transform: translateY(2px);
+}
+
+@keyframes ActionButtonFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 </style>
