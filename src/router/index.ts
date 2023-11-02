@@ -1,9 +1,14 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import auto from '../views/AutoPage.vue'
 import manu from '../views/ManuPage.vue'
-import main from '@/views/MainPage.vue'
+import Home from '@/views/MainPage.vue'
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    name: 'home',
+    component: Home
+  },
   {
     path: '/auto',
     name: 'auto',
@@ -16,8 +21,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/main',
-    name: 'main',
-    component: main
+    name: 'home',
+    component: Home
   }
 ]
 

@@ -8,6 +8,7 @@ import { useGlobalStore } from '@/stores/globalStore'
 const Global = useGlobalStore()
 
 function activatePopup(actionName: string) {
+    Global.Edittype = 'add'
     Global.activePopup = actionName
     Global.TogglePopup()
 }

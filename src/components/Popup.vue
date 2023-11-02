@@ -21,7 +21,7 @@
             <button class="button-23 close-btn" role="button" @click="Global.TogglePopup()">
                 &times;
             </button>
-            <button class="button-23 confirm-btn" role="button" @click="Confirm(true)">
+            <button v-show="Global.Edittype == 'edit'" class="button-23 confirm-btn" role="button" @click="Confirm(true)">
                 Löschen
             </button>
         </div>
