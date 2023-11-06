@@ -5,7 +5,8 @@ export interface Feature {
     sollvalue: number,
     time: number,
     timeString: string,
-    istvalue?: number
+    istvalue?: number,
+    iconLink?: string
 }
 export const Sonne: Feature = {
     id: 0,
@@ -13,7 +14,8 @@ export const Sonne: Feature = {
     value_name: 'Intensität',
     sollvalue: 0,
     time: 0,
-    timeString: '00:00'
+    timeString: '00:00',
+    iconLink: 'https://www.svgrepo.com/show/18743/sun.svg'
 };
 
 export const Regen: Feature = {

@@ -1,6 +1,7 @@
 <template>
     <div class="box">
         <div class="heading">
+            <img class="icon" :src="F.iconLink">
             {{ F.name }}
         </div>
         <div class="content" v-if="F !== undefined">
@@ -47,8 +48,10 @@ const pr = defineProps<{ F: Feature }>()
 }
 
 .icon {
-    width: 20px;
-    height: 20px;
-    /* Hintergrundfarbe für das Icon */
+    display: inline-flex;
+    align-items: center;
+    height: 15px;
+    padding: 0px;
+    margin: 0px;
 }
 </style>
