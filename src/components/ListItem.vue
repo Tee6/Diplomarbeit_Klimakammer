@@ -2,7 +2,7 @@
     <div class="listitem" @click="test(Feat.id)">
         <h2 class="FeatName">{{ Feat.name }}</h2>
         <div>
-            <p class="Vals">{{ Feat.value_name }}: {{ Feat.value }}</p>
+            <p class="Vals">{{ Feat.value_name }}: {{ Feat.sollvalue }}</p>
             <p class="Vals">Time: +{{ Feat.timeString }}h</p>
         </div>
     </div>

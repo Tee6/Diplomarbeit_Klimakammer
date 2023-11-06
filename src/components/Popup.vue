@@ -75,7 +75,7 @@ function Confirm(del = false) {
         ObjClone.name = Global.activePopup
         ObjClone.id = Global.ActionList.length + 1
         ObjClone.value_name = val_name
-        ObjClone.value = FormValue1
+        ObjClone.sollvalue = FormValue1
         let minutes = FormTime.split(':')
         let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
         ObjClone.time = realminutes
@@ -88,7 +88,7 @@ function Confirm(del = false) {
         if (index !== undefined) {
             const foundObject = Global.ActionList[index]
             if (FormValue1 !== undefined) {
-                foundObject.value = FormValue1;
+                foundObject.sollvalue = FormValue1;
             }
             if (FormTime !== undefined) {
                 let minutes = FormTime.split(':')

@@ -6,18 +6,13 @@ import { Feat } from "@/objects/Feature";
 
 export const useGlobalStore = defineStore('globalStore', {
     state: () => ({
-        sollTemp: 0,
-        istTemp: 0,
-        sollRain: 0,
-        istRain: 0,
-        sollHumid: 0,
-        istHumid: 0,
-        showPopup: false as boolean,
-        activePopup: '' as string,
-        PopUpType: 'main' as string,
-        Edittype: 'add' as string,
-        ActionID: 0 as number,
-        ActionList: [] as Feature[]
+        showPopup: false as boolean, // State Variable if PopUp is currently visible
+        activePopup: '' as string, // What kind of Action is going to be added e.g. Sun, Rain,....
+        PopUpType: 'main' as string, // On Which View a PopUp is being opened
+        Edittype: 'add' as string, // What the PopUp will do (add or edit)
+        ActionID: 0 as number,      // continous variable to identify each Action
+        ActionList: [] as Feature[], // List of every Action that has been created
+        CurrentAction: 0 as number // ID of Last or current Action
     }),
     actions: ({
         TogglePopup() {

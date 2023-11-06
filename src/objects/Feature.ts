@@ -2,16 +2,16 @@ export interface Feature {
     id: number,
     name: string,
     value_name: string,
-    value: number,
+    sollvalue: number,
     time: number,
-    timeString: string
+    timeString: string,
+    istvalue?: number
 }
-
 export const Sonne: Feature = {
     id: 0,
     name: 'Sonne',
     value_name: 'Intensität',
-    value: 0,
+    sollvalue: 0,
     time: 0,
     timeString: '00:00'
 };
@@ -20,7 +20,7 @@ export const Regen: Feature = {
     id: 0,
     name: 'Regen',
     value_name: 'Intensität',
-    value: 0,
+    sollvalue: 0,
     time: 0,
     timeString: '00:00'
 };
@@ -29,7 +29,7 @@ export const Luftfeuchtigkeit: Feature = {
     id: 0,
     name: 'Luftfeuchtigkeit',
     value_name: 'Prozent',
-    value: 0,
+    sollvalue: 0,
     time: 0,
     timeString: '00:00'
 };

@@ -18,7 +18,7 @@ const Features = useFeatureStore()
 const Global = useGlobalStore()
 
 Global.PopUpType = 'auto'
-Features.Fill()
+//Features.Fill()
 </script>
 
 <style>

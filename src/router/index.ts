@@ -6,8 +6,7 @@ import Home from '@/views/MainPage.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    redirect: '/main'
   },
   {
     path: '/auto',
@@ -23,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/main',
     name: 'home',
     component: Home
-  }
+  },
 ]
 
 const router = createRouter({
