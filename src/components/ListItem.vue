@@ -1,9 +1,9 @@
 <template>
-    <div class="listitem" @click="test(Feat.id)">
-        <h2 class="FeatName">{{ Feat.name }}</h2>
+    <div class="listitem" @click="test(Feat?.id)">
+        <h2 class="FeatName">{{ Feat?.name }}</h2>
         <div>
-            <p class="Vals">{{ Feat.value_name }}: {{ Feat.sollvalue }}</p>
-            <p class="Vals">Time: +{{ Feat.timeString }}h</p>
+            <p class="Vals">{{ Feat?.value_name }}: {{ Feat?.sollvalue }}</p>
+            <p class="Vals">Time: +{{ Feat?.timeString }}h</p>
         </div>
     </div>
 </template>
@@ -13,12 +13,12 @@ import { Feature } from '@/objects/Feature';
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
 
-function test(featID: number) {
+function test(featID = 0) {
     Global.TogglePopup()
     Global.ActionID = featID
     Global.Edittype = 'edit'
 }
-defineProps<{ Feat: Feature }>()
+defineProps<{ Feat?: Feature }>()
 </script>
 
 <style scoped>

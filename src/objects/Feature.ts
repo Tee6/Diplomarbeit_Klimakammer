@@ -15,7 +15,7 @@ export const Sonne: Feature = {
     sollvalue: 0,
     time: 0,
     timeString: '00:00',
-    iconLink: 'https://www.svgrepo.com/show/18743/sun.svg'
+    iconLink: 'sunny'
 };
 
 export const Regen: Feature = {
@@ -24,7 +24,8 @@ export const Regen: Feature = {
     value_name: 'Intensität',
     sollvalue: 0,
     time: 0,
-    timeString: '00:00'
+    timeString: '00:00',
+    iconLink: 'rainy'
 };
 
 export const Luftfeuchtigkeit: Feature = {
@@ -33,7 +34,8 @@ export const Luftfeuchtigkeit: Feature = {
     value_name: 'Prozent',
     sollvalue: 0,
     time: 0,
-    timeString: '00:00'
+    timeString: '00:00',
+    iconLink: 'humidity_percentage'
 };
 
 export const Feat = [Sonne, Regen, Luftfeuchtigkeit]

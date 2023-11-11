@@ -11,6 +11,9 @@ import { useGlobalStore } from '@/stores/globalStore';
 const Features = useFeatureStore()
 const Global = useGlobalStore()
 Global.PopUpType = 'manu'
+if (Features.Features.length < 1) {
+    Features.Fill()
+}
 </script>
 
 <style>
