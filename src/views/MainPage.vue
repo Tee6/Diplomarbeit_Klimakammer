@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        Willkommen
+        <h1>Klimakammer Übersicht</h1>
         <StatusBox class="StatBox" v-for="a in Features.Features" :-f="a"></StatusBox>
     </div>
 </template>

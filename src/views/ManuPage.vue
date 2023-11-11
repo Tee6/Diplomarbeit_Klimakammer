@@ -16,10 +16,4 @@ if (Features.Features.length < 1) {
 }
 </script>
 
-<style>
-.container {
-    margin-left: 392px;
-    width: 145%;
-    height: 900%;
-}
-</style>
+<style></style>

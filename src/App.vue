@@ -12,13 +12,14 @@ import { useGlobalStore } from './stores/globalStore';
 const Global = useGlobalStore()
 
 Global.PopUpType == 'welcome'
+
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&family=Roboto&display=swap');
 
 #app {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -47,5 +48,18 @@ button {
 
 router-view {
   z-index: 3;
+}
+
+.centertitle {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  margin: 0;
+}
+
+.container {
+  margin-left: 392px;
+  width: 145%;
+  height: 900%;
 }
 </style>

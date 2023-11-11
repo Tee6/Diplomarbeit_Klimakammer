@@ -29,7 +29,7 @@ const Action = Global.ActionList.find(obj => obj.name == pr.F?.name && obj.id > 
 
 
 const pr = defineProps<{ F?: Feature }>()
-
+//box: width: 90.4%;
 </script>
 
 <style>
@@ -38,9 +38,10 @@ const pr = defineProps<{ F?: Feature }>()
     border: 5px solid #5EA447;
     border-radius: 9px;
     background-color: #30621f;
-    width: 95%;
+    width: 40%;
     text-align: left;
     margin: 20px;
+    padding-bottom: 10px;
 }
 
 .heading {
@@ -53,6 +54,7 @@ const pr = defineProps<{ F?: Feature }>()
 }
 
 .content {
+    padding-top: 5px;
     padding-left: 10px;
 }
 
@@ -68,5 +70,6 @@ const pr = defineProps<{ F?: Feature }>()
     display: flex;
     align-items: center;
     padding-left: 5px;
+    font-weight: bolder;
 }
 </style>

@@ -1,7 +1,8 @@
 <template>
   <div class="container">
+    <h1 style="margin-bottom: 0px; position: relative; left: -434px;"> Automatische Steuerung </h1>
     <div class="button-grid">
-      <ActionButton v-for="a of Features.Features" :action-name="a.name" :key="a.name">
+      <ActionButton v-for="a of Features.Features" :action-name="a.name" :key="a.name" style="margin-top: 0px;">
       </ActionButton>
       <PopUp :action-name="Global.activePopup" v-if="Global.showPopup">
       </PopUp>
@@ -30,9 +31,6 @@ if (Features.Features.length < 1) {
   flex-wrap: wrap;
   font-size: 18px;
   float: left;
-}
-
-.container {
-  margin-left: 392px;
+  margin: 20px;
 }
 </style>
