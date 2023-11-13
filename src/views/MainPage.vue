@@ -1,8 +1,6 @@
 <template>
-    <div class="container">
-        <h1>Klimakammer Übersicht</h1>
-        <StatusBox class="StatBox" v-for="a in Features.Features" :-f="a"></StatusBox>
-    </div>
+    <h1>Klimakammer Übersicht</h1>
+    <StatusBox class="StatBox" v-for="a in Features.Features" :-f="a"></StatusBox>
 </template>
 
 <script lang="ts" setup>
@@ -19,5 +17,18 @@ Features.Fill()
 <style>
 .StatBox {
     margin-left: 20px;
+    animation: StatusBoxAnimation 0.5s ease 0s 1 normal none;
+}
+
+@keyframes StatusBoxAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 </style>

@@ -1,7 +1,5 @@
 <template>
-    <div class="container">
-        Simson isch an installateur
-    </div>
+    <h1> Manuelle Steuerung </h1>
 </template>
 
 <script lang="ts" setup>

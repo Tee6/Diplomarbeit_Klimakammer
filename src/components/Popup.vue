@@ -42,6 +42,7 @@ import { useGlobalStore } from '@/stores/globalStore'
 const Global = useGlobalStore()
 
 import { Feature } from '@/objects/Feature';
+import { Action } from '@/objects/Feature';
 
 let l: Feature
 
@@ -75,16 +76,21 @@ function Confirm(del = false) {
     }
     if (Global.Edittype == "add") {
         Global.TogglePopup()
-        let ObjClone = { ...featureStore.Features[l.id] }
-        ObjClone.name = Global.activePopup
-        ObjClone.id = Global.ActionList.length + 1
-        ObjClone.value_name = l.value_name
-        ObjClone.sollvalue = FormValue1
+        let FeatureClone = { ...featureStore.Features[l.id] }
+
         let minutes = FormTime.split(':')
         let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
-        ObjClone.time = realminutes
-        ObjClone.timeString = FormTime
-        Global.ActionList.push(ObjClone)
+
+        const ActionClone: Action = {
+            id: Global.ActionCounter,
+            name: Global.activePopup,
+            sollvalue: FormValue1,
+            value_name: FeatureClone.value_name,
+            time: realminutes,
+            timeString: FormTime
+        }
+        Global.ActionCounter = Global.ActionCounter + 1
+        Global.ActionList.push(ActionClone)
         Global.TaskSort()
     }
     if (Global.Edittype == 'edit') {
@@ -216,6 +222,12 @@ form {
 .confirm-btn {
     padding: 8px;
     margin-bottom: 20px;
+    transition: all .5s ease;
+}
+
+.confirm-btn:hover {
+    background-color: #369f4b;
+    color: white;
 }
 
 .close-btn {
@@ -223,5 +235,11 @@ form {
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
+    transition: all .5s ease;
+}
+
+.close-btn:hover {
+    color: white;
+    background-color: rgb(236, 74, 74);
 }
 </style>

@@ -2,7 +2,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <Navbar></Navbar>
   <sidebar :key="Global.ActionList.length"></sidebar>
-  <router-view />
+  <div class="container">
+    <router-view />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -34,6 +36,11 @@ Global.PopUpType == 'welcome'
     "ablauf func func";
 }
 
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
 nav {
   grid-area: navbar;
 }
@@ -58,8 +65,11 @@ router-view {
 }
 
 .container {
-  margin-left: 392px;
-  width: 145%;
-  height: 900%;
+  margin-left: 395px;
+  height: 900px;
+  width: 1250px;
+  margin-top: 80px;
+  position: fixed;
+  overflow: scroll;
 }
 </style>

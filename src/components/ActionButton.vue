@@ -70,6 +70,7 @@ defineProps({ actionName: { type: String, required: true } })
     width: 10em;
     letter-spacing: 1px;
     animation: ActionButtonFadeIn 0.5s ease 0s 1 normal none;
+    animation: StatusBoxAnimation 0.5s ease 0s 1 normal none;
 }
 
 .button-29:focus {

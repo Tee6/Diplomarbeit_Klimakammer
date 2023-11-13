@@ -9,16 +9,18 @@
 </template>
 
 <script setup lang="ts">
-import { Feature } from '@/objects/Feature';
+import { Action } from '@/objects/Feature';
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
 
 function test(featID = 0) {
-    Global.TogglePopup()
-    Global.ActionID = featID
-    Global.Edittype = 'edit'
+    if (Global.PopUpType == 'auto') {
+        Global.TogglePopup()
+        Global.ActionID = featID
+        Global.Edittype = 'edit'
+    }
 }
-defineProps<{ Feat?: Feature }>()
+defineProps<{ Feat?: Action }>()
 </script>
 
 <style scoped>

@@ -30,6 +30,7 @@ nav {
     align-items: center;
     z-index: 2;
     background-color: white;
+    position: fixed;
 }
 
 nav a router-link {
