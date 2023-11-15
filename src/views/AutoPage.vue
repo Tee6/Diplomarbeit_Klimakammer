@@ -1,11 +1,10 @@
 <template>
-  <div class="container">
-    <div class="button-grid">
-      <ActionButton v-for="a of Features.Features" :action-name="a.name" :key="a.name">
-      </ActionButton>
-      <PopUp :action-name="Global.activePopup" v-if="Global.showPopup">
-      </PopUp>
-    </div>
+  <h1> Automatische Steuerung </h1>
+  <div class="button-grid">
+    <ActionButton v-for="a of Features.Features" :action-name="a.name" :key="a.name" style="margin-top: 0px;">
+    </ActionButton>
+    <PopUp :action-name="Global.activePopup" v-if="Global.showPopup">
+    </PopUp>
   </div>
 </template>
 
@@ -18,7 +17,9 @@ const Features = useFeatureStore()
 const Global = useGlobalStore()
 
 Global.PopUpType = 'auto'
-Features.Fill()
+if (Features.Features.length < 1) {
+  Features.Fill()
+}
 </script>
 
 <style>
@@ -28,9 +29,6 @@ Features.Fill()
   flex-wrap: wrap;
   font-size: 18px;
   float: left;
-}
-
-.container {
-  margin-left: 392px;
+  margin: 20px;
 }
 </style>

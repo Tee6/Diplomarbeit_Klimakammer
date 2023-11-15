@@ -1,24 +1,26 @@
 <template>
-    <div class="listitem" @click="test(Feat.id)">
-        <h2 class="FeatName">{{ Feat.name }}</h2>
+    <div class="listitem" @click="test(Feat?.id)">
+        <h2 class="FeatName">{{ Feat?.name }}</h2>
         <div>
-            <p class="Vals">{{ Feat.value_name }}: {{ Feat.value }}</p>
-            <p class="Vals">Time: +{{ Feat.timeString }}h</p>
+            <p class="Vals">{{ Feat?.value_name }}: {{ Feat?.sollvalue }}%</p>
+            <p class="Vals">Time: +{{ Feat?.timeString }}h</p>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { Feature } from '@/objects/Feature';
+import { Action } from '@/objects/Feature';
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
 
-function test(featID: number) {
-    Global.TogglePopup()
-    Global.ActionID = featID
-    Global.Edittype = 'edit'
+function test(featID = 0) {
+    if (Global.PopUpType == 'auto') {
+        Global.TogglePopup()
+        Global.ActionID = featID
+        Global.Edittype = 'edit'
+    }
 }
-defineProps<{ Feat: Feature }>()
+defineProps<{ Feat?: Action }>()
 </script>
 
 <style scoped>

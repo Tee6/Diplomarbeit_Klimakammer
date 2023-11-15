@@ -1,12 +1,17 @@
 
 <template>
     <div class="popup">
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
         <div class="popup-inner">
             <slot />
-            <h3 style="margin: 10px; text-align: left; text-decoration: solid; text-decoration-line: underline;"> {{
-                Global.activePopup }}</h3>
+            <span style="position: relative; top: 5px; padding-right: 5px;" class="material-symbols-outlined">
+                {{ l.iconLink }}
+            </span>
+            <span style=" text-decoration: solid; text-decoration-line: underline;"> {{
+                Global.activePopup }}</span>
             <form>
-                <label> {{ val_name + ' ' }} </label>
+                <label> {{ l.value_name + ' ' }} </label>
                 <input type="number" placeholder="%" v-model="FormValue1" />
 
                 <div v-show="Global.PopUpType == 'auto'" style="margin-top: 15px;">
@@ -36,17 +41,17 @@ const featureStore = useFeatureStore()
 import { useGlobalStore } from '@/stores/globalStore'
 const Global = useGlobalStore()
 
-let val_name: string
-let val_ID: number
+import { Feat, Feature } from '@/objects/Feature';
+import { Action } from '@/objects/Feature';
+
+let l: Feature
 
 let FormValue1: number
 let FormTime: string
-
 function findFeature() {
     for (const k of featureStore.Features) {
         if (k.name == Global.activePopup) {
-            val_name = k.value_name
-            val_ID = k.id
+            l = k
         }
     }
 }
@@ -62,6 +67,7 @@ function Confirm(del = false) {
         Global.ActionID = 0
         Global.showPopup = false
         Global.TaskSort()
+        featureStore.UpdateMap(Global.ActionList)
         return
     }
 
@@ -71,24 +77,29 @@ function Confirm(del = false) {
     }
     if (Global.Edittype == "add") {
         Global.TogglePopup()
-        let ObjClone = { ...featureStore.Features[val_ID] }
-        ObjClone.name = Global.activePopup
-        ObjClone.id = Global.ActionList.length + 1
-        ObjClone.value_name = val_name
-        ObjClone.value = FormValue1
+        let FeatureClone = { ...featureStore.Features[l.id] }
+
         let minutes = FormTime.split(':')
         let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
-        ObjClone.time = realminutes
-        ObjClone.timeString = FormTime
-        Global.ActionList.push(ObjClone)
+
+        const ActionClone: Action = {
+            id: Global.ActionList.length + 1,
+            name: Global.activePopup,
+            sollvalue: FormValue1,
+            value_name: FeatureClone.value_name,
+            time: realminutes,
+            timeString: FormTime
+        }
+        Global.ActionList.push(ActionClone)
         Global.TaskSort()
+        featureStore.UpdateMap(Global.ActionList)
     }
     if (Global.Edittype == 'edit') {
         const index = Global.ActionList.findIndex(obj => obj.id === Global.ActionID)
         if (index !== undefined) {
             const foundObject = Global.ActionList[index]
             if (FormValue1 !== undefined) {
-                foundObject.value = FormValue1;
+                foundObject.sollvalue = FormValue1;
             }
             if (FormTime !== undefined) {
                 let minutes = FormTime.split(':')
@@ -105,6 +116,7 @@ function Confirm(del = false) {
         Global.ActionID = 0
         Global.showPopup = false
         Global.TaskSort()
+        featureStore.UpdateMap(Global.ActionList)
     }
 }
 findFeature()
@@ -212,6 +224,12 @@ form {
 .confirm-btn {
     padding: 8px;
     margin-bottom: 20px;
+    transition: all .5s ease;
+}
+
+.confirm-btn:hover {
+    background-color: #369f4b;
+    color: white;
 }
 
 .close-btn {
@@ -219,5 +237,11 @@ form {
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
+    transition: all .5s ease;
+}
+
+.close-btn:hover {
+    color: white;
+    background-color: rgb(236, 74, 74);
 }
 </style>
