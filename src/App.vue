@@ -66,7 +66,7 @@ router-view {
 
 .container {
   margin-left: 395px;
-  height: 900px;
+  height: 760px;
   width: 1250px;
   margin-top: 80px;
   position: fixed;

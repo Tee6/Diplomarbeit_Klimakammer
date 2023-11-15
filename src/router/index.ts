@@ -1,7 +1,8 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import auto from '../views/AutoPage.vue'
-import manu from '../views/ManuPage.vue'
+import auto from '@/views/AutoPage.vue'
+import manu from '@/views/ManuPage.vue'
 import Home from '@/views/MainPage.vue'
+import liveweather from '@/views/LiveWeatherPage.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -23,6 +24,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'home',
     component: Home
   },
+  {
+    path: '/liveweather',
+    name: 'liveweather',
+    component: liveweather
+  }
 ]
 
 const router = createRouter({

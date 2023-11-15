@@ -5,7 +5,9 @@
             to="/auto">Auto
         </router-link> |
         <router-link :class="{ activeTab: Global.PopUpType == 'manu' }" class="navlink button-28" role="button"
-            to="/manu">Manuell</router-link>
+            to="/manu">Manuell</router-link> |
+        <router-link :class="{ activeTab: Global.PopUpType == 'liveweather' }" class="navlink button-28" role="button"
+            to="/liveweather">LIVE Wetter</router-link>
     </nav>
 </template>
 <script lang="ts" setup>

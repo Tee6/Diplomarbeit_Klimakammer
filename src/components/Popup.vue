@@ -41,7 +41,7 @@ const featureStore = useFeatureStore()
 import { useGlobalStore } from '@/stores/globalStore'
 const Global = useGlobalStore()
 
-import { Feature } from '@/objects/Feature';
+import { Feat, Feature } from '@/objects/Feature';
 import { Action } from '@/objects/Feature';
 
 let l: Feature
@@ -67,6 +67,7 @@ function Confirm(del = false) {
         Global.ActionID = 0
         Global.showPopup = false
         Global.TaskSort()
+        featureStore.UpdateMap(Global.ActionList)
         return
     }
 
@@ -82,16 +83,16 @@ function Confirm(del = false) {
         let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
 
         const ActionClone: Action = {
-            id: Global.ActionCounter,
+            id: Global.ActionList.length + 1,
             name: Global.activePopup,
             sollvalue: FormValue1,
             value_name: FeatureClone.value_name,
             time: realminutes,
             timeString: FormTime
         }
-        Global.ActionCounter = Global.ActionCounter + 1
         Global.ActionList.push(ActionClone)
         Global.TaskSort()
+        featureStore.UpdateMap(Global.ActionList)
     }
     if (Global.Edittype == 'edit') {
         const index = Global.ActionList.findIndex(obj => obj.id === Global.ActionID)
@@ -115,6 +116,7 @@ function Confirm(del = false) {
         Global.ActionID = 0
         Global.showPopup = false
         Global.TaskSort()
+        featureStore.UpdateMap(Global.ActionList)
     }
 }
 findFeature()

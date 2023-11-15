@@ -3,7 +3,6 @@ import { useFeatureStore } from "./featureStore";
 import { Feature } from "@/objects/Feature";
 import { Feat } from "@/objects/Feature";
 import { Action } from "@/objects/Feature";
-//const Features = useFeatureStore();
 
 export const useGlobalStore = defineStore('globalStore', {
     state: () => ({
@@ -14,7 +13,7 @@ export const useGlobalStore = defineStore('globalStore', {
         ActionID: 0 as number,      // continous variable to identify each Action
         ActionList: [] as Action[], // List of every Action that has been created
         CurrentAction: 0 as number, // ID of Last or current Action
-        ActionCounter: 0 as number
+
     }),
     actions: ({
         TogglePopup() {

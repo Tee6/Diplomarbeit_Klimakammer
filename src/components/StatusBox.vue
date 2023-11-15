@@ -11,11 +11,11 @@
             </div>
             <div class="content" v-if="Action?.id !== undefined">
                 <div style="margin-right: 10px;">
-                    Current {{ F?.value_name }}: {{ F?.istvalue }}%
+                    Derzeitige {{ F?.value_name }}: {{ F?.istvalue }}%
                     <br>
-                    Expected {{ F?.value_name }}: {{ Action?.sollvalue }}%
+                    Erwartete {{ F?.value_name }}: {{ Action?.sollvalue }}%
                 </div>
-                <LineChart :chart-data="testData" :options="options"></LineChart>
+                <LineChart :chart-data="testData"></LineChart>
             </div>
             <div class="content" v-if="Action?.id == undefined">
                 No Action defined
@@ -23,12 +23,13 @@
         </div>
     </div>
 </template>
+
 <script setup lang="ts">
-import { computed, defineComponent, ref } from "vue";
-import { Chart, registerables, ChartData, ChartOptions, } from 'chart.js';
+import { computed } from "vue";
+import { Chart, registerables, ChartOptions, } from 'chart.js';
 Chart.register(...registerables);
 Chart.defaults.color = '#FFFFFF';
-
+Chart.defaults.borderColor = '#30621f'
 const options = computed<ChartOptions<"line">>(() => ({
     plugins: {
         legend: {
@@ -41,18 +42,25 @@ const options = computed<ChartOptions<"line">>(() => ({
 import { LineChart } from 'vue-chart-3'
 import { Feature } from '@/objects/Feature';
 import { useGlobalStore } from '@/stores/globalStore'
+import { useFeatureStore } from "@/stores/featureStore";
+const featureStore = useFeatureStore()
 const Global = useGlobalStore()
 
-const Action = Global.ActionList.find(obj => obj.name == pr.F?.name && obj.id > Global.CurrentAction)
+const Action = Global.ActionList.find(obj => obj.name == pr.F?.name && obj.id >= Global.CurrentAction)
 
 const pr = defineProps<{ F?: Feature }>()
-
+let x = featureStore.CreateXaxis(featureStore.Featuremap)
+let xz = x.get(pr.F?.name || '') ?? [0]
+let y = featureStore.CreateYaxis(featureStore.Featuremap)
+let yz = y.get(pr.F?.name || '') ?? [0]
 const testData = {
-    labels: ['Paris', 'Nîmes'],
+    labels: xz,
     datasets: [
         {
-            data: [30, 40, 60, 70, 5],
-            backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
+            label: pr.F?.name,
+            data: yz,
+            stepped: true,
+            borderColor: '#FFFFFF'
         },
     ],
 };
