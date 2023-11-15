@@ -56,6 +56,7 @@ function findFeature() {
     }
 }
 function Confirm(del = false) {
+    let FormTime1 = validTime()
     if (del) {
         const index = Global.ActionList.findIndex(obj => obj.id === Global.ActionID)
         if (index !== undefined) {
@@ -78,8 +79,7 @@ function Confirm(del = false) {
     if (Global.Edittype == "add") {
         Global.TogglePopup()
         let FeatureClone = { ...featureStore.Features[l.id] }
-
-        let minutes = FormTime.split(':')
+        let minutes = FormTime1.split(':')
         let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
 
         const ActionClone: Action = {
@@ -88,7 +88,7 @@ function Confirm(del = false) {
             sollvalue: FormValue1,
             value_name: FeatureClone.value_name,
             time: realminutes,
-            timeString: FormTime
+            timeString: FormTime1
         }
         Global.ActionList.push(ActionClone)
         Global.TaskSort()
@@ -101,13 +101,13 @@ function Confirm(del = false) {
             if (FormValue1 !== undefined) {
                 foundObject.sollvalue = FormValue1;
             }
-            if (FormTime !== undefined) {
-                let minutes = FormTime.split(':')
+            if (FormTime1 !== undefined) {
+                let minutes = FormTime1.split(':')
                 let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
                 foundObject.time = realminutes;
             }
-            if (FormTime !== undefined) {
-                foundObject.timeString = FormTime;
+            if (FormTime1 !== undefined) {
+                foundObject.timeString = FormTime1;
             }
         } else {
             console.log('Object not found');
@@ -118,6 +118,15 @@ function Confirm(del = false) {
         Global.TaskSort()
         featureStore.UpdateMap(Global.ActionList)
     }
+}
+function validTime() {
+    if (typeof FormTime == 'undefined') {
+        alert('Time not valid, enter a valid time')
+        FormTime = '00:00'
+    } else {
+        return FormTime
+    }
+    return FormTime
 }
 findFeature()
 defineProps({ actionName: { type: String, required: true } })
