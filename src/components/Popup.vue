@@ -76,6 +76,9 @@ function Confirm(del = false) {
         return
     }
     if (Global.Edittype == "add") {
+        if (FormTime == undefined) {
+            FormTime = getCurrentTime()
+        }
         Global.TogglePopup()
         let FeatureClone = { ...featureStore.Features[l.id] }
         let minutes = FormTime.split(':')
@@ -120,7 +123,13 @@ function Confirm(del = false) {
 }
 findFeature()
 defineProps({ actionName: { type: String, required: true } })
-
+function getCurrentTime() {
+    const now = new Date();
+    const minnum = now.getMinutes() + 1 // falls fehler auftreten bei direkter angabe von Uhrzeit
+    const hours = now.getHours().toString().padStart(2, '0'); // Stunde mit führender Null
+    const minutes = minnum.toString().padStart(2, '0'); // Minute mit führender Null
+    return `${hours}:${minutes}`;
+}
 </script>
 
 <style scoped>

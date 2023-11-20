@@ -1,5 +1,8 @@
 <template>
-    <button class="actionBtn button-29" role="button" @click="() => activatePopup(actionName)">{{ actionName }}</button>
+    <button v-if="Global.PopUpType !== 'main'" class="actionBtn button-29" role="button"
+        @click="() => activatePopup(actionName)">{{ actionName }}</button>
+    <button v-if="Global.PopUpType == 'main'" class="actionBtn button-29" role="button"
+        @click="() => activatePopup(actionName)">Wert sofort ändern</button>
 </template>
 
 <script lang="ts" setup>

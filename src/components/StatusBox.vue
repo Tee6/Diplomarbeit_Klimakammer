@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="display: grid;">
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
         <div class="box" style="width: 60%;">
@@ -10,21 +10,25 @@
                 <span class="statustitle">{{ F?.name }}</span>
             </div>
             <div class="content" v-if="Action?.id !== undefined">
-                <div style="margin-right: 10px;">
+                <div style="margin-right: 10px; height: 50px;">
                     Derzeitige {{ F?.value_name }}: {{ F?.istvalue }}%
                     <br>
                     Erwartete {{ F?.value_name }}: {{ Action?.sollvalue }}%
                 </div>
                 <LineChart style="width: 300px" :chart-data="testData"></LineChart>
+                <ActionButton :action-name="F?.name ?? 'Sonne'"> Change Value </ActionButton>
+
             </div>
             <div class="content" v-if="Action?.id == undefined">
                 No Action defined
             </div>
+
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import ActionButton from '@/components/ActionButton.vue'
 import { computed } from "vue";
 import { Chart, registerables, ChartOptions, } from 'chart.js';
 Chart.register(...registerables);
@@ -65,8 +69,6 @@ const testData = {
         },
     ],
 };
-
-//box: width: 90.4%;
 </script>
 
 <style>

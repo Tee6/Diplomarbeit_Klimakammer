@@ -2,10 +2,10 @@
     <nav>
         <router-link class="navlink button-28 title" to="/main">Klimakammer</router-link>
         <router-link :class="{ activeTab: Global.PopUpType == 'auto' }" class="navlink button-28" role="button"
-            to="/auto">Auto
+            to="/auto">Ablauf erstellen
         </router-link>
-        <router-link :class="{ activeTab: Global.PopUpType == 'manu' }" class="navlink button-28" role="button"
-            to="/manu">Manuell</router-link>
+        <!--<router-link :class="{ activeTab: Global.PopUpType == 'manu' }" class="navlink button-28" role="button"
+            to="/manu">Manuell</router-link> -->
         <router-link :class="{ activeTab: Global.PopUpType == 'liveweather' }" class="navlink button-28" role="button"
             to="/liveweather">LIVE Wetter</router-link>
     </nav>
