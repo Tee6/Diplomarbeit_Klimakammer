@@ -20,12 +20,17 @@ Global.PopUpType == 'welcome'
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&family=Roboto&display=swap');
 
+html {
+  background-color: #000000;
+}
+
 #app {
+  border-radius: 10px;
+  background-color: #000000;
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 
   overflow: hidden;
 
@@ -39,10 +44,12 @@ Global.PopUpType == 'welcome'
 h1 {
   display: flex;
   justify-content: center;
+  color: white;
 }
 
 nav {
   grid-area: navbar;
+  margin-left: 10px;
 }
 
 .sidenav {
@@ -65,11 +72,13 @@ router-view {
 }
 
 .container {
-  margin-left: 395px;
+  margin-top: 90px;
+  margin-left: 420px;
+  border-radius: 10px;
   height: 760px;
   width: 1250px;
-  margin-top: 80px;
   position: fixed;
   overflow: scroll;
+  background-color: #080808;
 }
 </style>

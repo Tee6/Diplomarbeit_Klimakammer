@@ -1,5 +1,10 @@
 <template>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <div class="listitem" @click="test(Feat?.id)">
+        <span class="material-symbols-outlined">
+            {{ ico?.iconLink }}
+        </span>
         <h2 class="FeatName">{{ Feat?.name }}</h2>
         <div>
             <p class="Vals">{{ Feat?.value_name }}: {{ Feat?.sollvalue }}%</p>
@@ -13,6 +18,9 @@ import { Action } from '@/objects/Feature';
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
 
+import { useFeatureStore } from '@/stores/featureStore';
+const FeatureStore = useFeatureStore()
+
 function test(featID = 0) {
     if (Global.PopUpType == 'auto') {
         Global.TogglePopup()
@@ -20,7 +28,9 @@ function test(featID = 0) {
         Global.Edittype = 'edit'
     }
 }
-defineProps<{ Feat?: Action }>()
+const props = defineProps<{ Feat?: Action }>()
+
+const ico = FeatureStore.Features.find(obj => obj.name == props.Feat?.name)
 </script>
 
 <style scoped>
@@ -38,10 +48,6 @@ defineProps<{ Feat?: Action }>()
 
 .listitem {
     animation: FadeIn 1s ease 0s 1 normal forwards;
-    -webkit-box-shadow: 10px 5px 10px 1px rgba(0, 0, 0, 0.27);
-    -moz-box-shadow: 10px 5px 10px 1px rgba(0, 0, 0, 0.27);
-    box-shadow: 10px 5px 10px 1px rgba(0, 0, 0, 0.27);
-    border: 5px solid #ffffff;
     border-radius: 10px;
     margin-bottom: 11px;
     margin-left: 10px;

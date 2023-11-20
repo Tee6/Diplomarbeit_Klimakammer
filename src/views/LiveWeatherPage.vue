@@ -1,5 +1,5 @@
 <template>
-    <h1> Hallo </h1>
+    <h1> Live Wetter </h1>
 </template>
 
 <script setup lang="ts">

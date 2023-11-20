@@ -56,7 +56,6 @@ function findFeature() {
     }
 }
 function Confirm(del = false) {
-    let FormTime1 = validTime()
     if (del) {
         const index = Global.ActionList.findIndex(obj => obj.id === Global.ActionID)
         if (index !== undefined) {
@@ -79,7 +78,7 @@ function Confirm(del = false) {
     if (Global.Edittype == "add") {
         Global.TogglePopup()
         let FeatureClone = { ...featureStore.Features[l.id] }
-        let minutes = FormTime1.split(':')
+        let minutes = FormTime.split(':')
         let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
 
         const ActionClone: Action = {
@@ -88,7 +87,7 @@ function Confirm(del = false) {
             sollvalue: FormValue1,
             value_name: FeatureClone.value_name,
             time: realminutes,
-            timeString: FormTime1
+            timeString: FormTime
         }
         Global.ActionList.push(ActionClone)
         Global.TaskSort()
@@ -101,13 +100,13 @@ function Confirm(del = false) {
             if (FormValue1 !== undefined) {
                 foundObject.sollvalue = FormValue1;
             }
-            if (FormTime1 !== undefined) {
-                let minutes = FormTime1.split(':')
+            if (FormTime !== undefined) {
+                let minutes = FormTime.split(':')
                 let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
                 foundObject.time = realminutes;
             }
-            if (FormTime1 !== undefined) {
-                foundObject.timeString = FormTime1;
+            if (FormTime !== undefined) {
+                foundObject.timeString = FormTime;
             }
         } else {
             console.log('Object not found');
@@ -118,15 +117,6 @@ function Confirm(del = false) {
         Global.TaskSort()
         featureStore.UpdateMap(Global.ActionList)
     }
-}
-function validTime() {
-    if (typeof FormTime == 'undefined') {
-        alert('Time not valid, enter a valid time')
-        FormTime = '00:00'
-    } else {
-        return FormTime
-    }
-    return FormTime
 }
 findFeature()
 defineProps({ actionName: { type: String, required: true } })
@@ -170,13 +160,6 @@ form {
         padding: 20px;
         border-style: solid;
         border-width: 5px;
-        background: radial-gradient(circle at 100% 100%, #ffffff 0, #ffffff 9px, transparent 9px) 0% 0%/13px 13px no-repeat,
-            radial-gradient(circle at 0 100%, #ffffff 0, #ffffff 9px, transparent 9px) 100% 0%/13px 13px no-repeat,
-            radial-gradient(circle at 100% 0, #ffffff 0, #ffffff 9px, transparent 9px) 0% 100%/13px 13px no-repeat,
-            radial-gradient(circle at 0 0, #ffffff 0, #ffffff 9px, transparent 9px) 100% 100%/13px 13px no-repeat,
-            linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 8px) calc(100% - 26px) no-repeat,
-            linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 26px) calc(100% - 8px) no-repeat,
-            conic-gradient(from -141deg at 1% 90%, #91ffa0 0%, #033a0a 100%) 29% 15%/199% 190%;
         border-radius: 13px;
         box-sizing: border-box;
         animation: PopUpFadeIn 0.5s ease 0s 1 normal none;
@@ -241,6 +224,11 @@ form {
     color: white;
 }
 
+.confirm-btn:focus {
+    background-color: #369f4b;
+    color: white;
+}
+
 .close-btn {
     margin-left: 10px;
     padding: 5px;
@@ -250,6 +238,11 @@ form {
 }
 
 .close-btn:hover {
+    color: white;
+    background-color: rgb(236, 74, 74);
+}
+
+.close-btn:focus {
     color: white;
     background-color: rgb(236, 74, 74);
 }

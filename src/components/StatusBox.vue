@@ -72,9 +72,8 @@ const testData = {
 <style>
 .box {
     color: white;
-    border: 5px solid #5EA447;
     border-radius: 9px;
-    background-color: #30621f;
+    background-color: #236326;
     text-align: left;
     margin: 20px;
     padding-bottom: 10px;
