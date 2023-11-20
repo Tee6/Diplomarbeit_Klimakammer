@@ -2,7 +2,7 @@
     <div>
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-        <div class="box" style="width: 40%;">
+        <div class="box" style="width: 60%;">
             <div class="heading">
                 <span class="material-symbols-outlined">
                     {{ F?.iconLink }}
@@ -15,7 +15,7 @@
                     <br>
                     Erwartete {{ F?.value_name }}: {{ Action?.sollvalue }}%
                 </div>
-                <LineChart :chart-data="testData"></LineChart>
+                <LineChart style="width: 300px" :chart-data="testData"></LineChart>
             </div>
             <div class="content" v-if="Action?.id == undefined">
                 No Action defined
@@ -30,6 +30,7 @@ import { Chart, registerables, ChartOptions, } from 'chart.js';
 Chart.register(...registerables);
 Chart.defaults.color = '#FFFFFF';
 Chart.defaults.borderColor = '#30621f'
+Chart.defaults.plugins.legend.display = false
 const options = computed<ChartOptions<"line">>(() => ({
     plugins: {
         legend: {
