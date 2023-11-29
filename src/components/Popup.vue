@@ -41,9 +41,8 @@ const featureStore = useFeatureStore()
 import { useGlobalStore } from '@/stores/globalStore'
 const Global = useGlobalStore()
 
-import { Feat, Feature } from '@/objects/Feature';
+import { Feature } from '@/objects/Feature';
 import { Action } from '@/objects/Feature';
-
 let l: Feature
 
 let FormValue1: number

@@ -1,7 +1,7 @@
 <template>
-    <button v-if="Global.PopUpType !== 'main'" class="actionBtn button-29" role="button"
+    <button v-if="Global.PopUpType == 'auto'" class="actionBtn button-29" role="button"
         @click="() => activatePopup(actionName)">{{ actionName }}</button>
-    <button v-if="Global.PopUpType == 'main'" class="actionBtn button-29" role="button"
+    <button v-if="Global.PopUpType == 'manu'" class="actionBtn button-29" role="button" style="margin-left: 180px;"
         @click="() => activatePopup(actionName)">Wert sofort ändern</button>
 </template>
 

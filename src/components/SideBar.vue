@@ -12,6 +12,7 @@
 import ListItem from './ListItem.vue';
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
+
 </script>
 <style>
 .sidenav {
@@ -21,7 +22,7 @@ const Global = useGlobalStore()
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #080808;
+    background-color: #1E1E1E;
     overflow-x: hidden;
     z-index: 1;
     border-radius: 10px;

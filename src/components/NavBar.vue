@@ -4,8 +4,8 @@
         <router-link :class="{ activeTab: Global.PopUpType == 'auto' }" class="navlink button-28" role="button"
             to="/auto">Ablauf erstellen
         </router-link>
-        <!--<router-link :class="{ activeTab: Global.PopUpType == 'manu' }" class="navlink button-28" role="button"
-            to="/manu">Manuell</router-link> -->
+        <router-link :class="{ activeTab: Global.PopUpType == 'manu' }" class="navlink button-28" role="button"
+            to="/manu">Manuell</router-link>
         <router-link :class="{ activeTab: Global.PopUpType == 'liveweather' }" class="navlink button-28" role="button"
             to="/liveweather">LIVE Wetter</router-link>
     </nav>
@@ -26,12 +26,15 @@ router-view {
 
 nav {
     padding: 10px;
+    padding-left: 200px;
+    padding-right: 200px;
     display: flex;
     z-index: 2;
-    background-color: #080808;
+    background-color: #151515;
     border-radius: 10px;
     justify-content: center;
     color: #FFFFFF;
+    width: 1239.15px;
 }
 
 nav a router-link {
