@@ -16,7 +16,7 @@ import { useGlobalStore } from './stores/globalStore';
 const Global = useGlobalStore()
 
 Global.PopUpType == 'welcome'
-
+Global.httpGet(Global.APIStart + Global.APIkey)
 
 </script>
 
@@ -91,5 +91,7 @@ router-view {
   position: fixed;
   overflow: scroll;
   background-color: #212121;
+  display: flex;
+  flex-direction: column;
 }
 </style>
