@@ -4,37 +4,86 @@
         <input type="text" class="search-bar" placeholder="Search..." v-model="query"
             @keydown.enter="Global.fetchWeather(query)" />
     </div>
-    <h1 v-if="Global.weather.main == null">Such nach einem Ort</h1>
-    <div class="weather-wrap" v-if="Global.weather.main != null">
+    <h1 v-if="Global.weatherNOW.main == null">Such nach einem Ort</h1>
+    <div class="weather-wrap" v-if="Global.weatherNOW.main != null">
         <div class="location-box">
             <img :src="Global.PictureLink">
-            <div class="location">{{ Global.weather.name }}, {{ Global.weather.sys.country }}</div>
+            <div class="location">{{ Global.weather.city.name }}, {{ Global.weather.city.country }}</div>
             <div class="date">{{ Global.dateBuilder() }}</div>
         </div>
 
         <div class="weather-box">
             <h1 style="margin: 5px;">Temperatur</h1>
-            <div class="temp">{{ Math.round(Global.weather.main.temp) }}°c</div>
+            <div class="temp">{{ Math.round(Global.weatherNOW.main.temp) }}°c</div>
         </div>
         <div class="weather-box">
             <h1 style="margin: 5px;">Luftfeuchtigkeit</h1>
-            <div class="temp">{{ Math.round(Global.weather.main.humidity) }}%</div>
+            <div class="temp">{{ Math.round(Global.weatherNOW.main.humidity) }}%</div>
         </div>
         <div class="weather-box">
             <h1 style="margin: 5px;">Sonne</h1>
-            <div class="temp">{{ 100 - Math.round(Global.weather.clouds.all) }}%</div>
+            <div class="temp">{{ 100 - Math.round(Global.weatherNOW.clouds.all) }}%</div>
         </div>
     </div>
-    <div class="weather-wrap forecast" v-if='Global.weather.main != null'>
-        <h1> Vorhersage: </h1>
+    <h1 v-if='Global.weatherNOW.main != null'> Vorhersage: </h1>
+    <div class="weather-wrap forecast" v-if='Global.weatherNOW.main != null'>
+        <LineChart style="width: 30%" :chart-data="TempData" :key="Global.keyList.length"></LineChart>
+        <LineChart style="width: 30%" :chart-data="HumidData" :key="Global.keyList.length"></LineChart>
+        <LineChart style="width: 30%" :chart-data="SunData" :key="Global.keyList.length"></LineChart>
     </div>
 </template>
 
 <script setup lang="ts">
+import { useFeatureStore } from '@/stores/featureStore';
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
+const FeatureStore = useFeatureStore()
 Global.PopUpType = 'liveweather'
 let query = ''
+
+import { Chart, registerables, ChartOptions, } from 'chart.js';
+import { LineChart } from 'vue-chart-3'
+
+Chart.register(...registerables);
+Chart.defaults.color = '#FFFFFF';
+Chart.defaults.borderColor = '#30621f'
+const TempData = {
+    labels: Global.keyList,
+    datasets: [
+        {
+            label: 'Temperatur',
+            data: Global.tempList,
+            borderColor: '#FFFFFF'
+        }
+    ],
+};
+const HumidData = {
+    labels: Global.keyList,
+    datasets: [
+        {
+            label: 'Luftfeuchtigkeit',
+            data: Global.humidList,
+            borderColor: '#FFFFFF'
+        },
+        {
+            label: 'Regen',
+            data: Global.rainList,
+            borderColor: '#FFFFFF'
+        }
+    ],
+};
+
+const SunData = {
+    labels: Global.uvtimeList,
+    datasets: [
+        {
+            label: 'Sonne',
+            data: Global.uvList,
+            borderColor: '#FFFFFF'
+        }
+    ],
+};
+Global.getUV()
 </script>
 
 <style>
@@ -128,5 +177,9 @@ main {
     align-items: center;
 
     margin-top: 20px;
+}
+
+.forecast {
+    flex-direction: row;
 }
 </style>

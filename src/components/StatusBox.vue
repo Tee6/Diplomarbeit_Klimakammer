@@ -53,15 +53,15 @@ const Global = useGlobalStore()
 const Action = Global.ActionList.find(obj => obj.name == pr.F?.name && obj.id >= Global.CurrentAction)
 const pr = defineProps<{ F?: Feature }>()
 let x = featureStore.CreateXaxis(featureStore.Featuremap)
-let xz = x.get(pr.F?.name || '') ?? [0]
+let Labels = x.get(pr.F?.name || '') ?? [0]
 let y = featureStore.CreateYaxis(featureStore.Featuremap)
-let yz = y.get(pr.F?.name || '') ?? [0]
+let LineData = y.get(pr.F?.name || '') ?? [0]
 const testData = {
-    labels: xz,
+    labels: Labels,
     datasets: [
         {
             label: pr.F?.name,
-            data: yz,
+            data: LineData,
             stepped: true,
             borderColor: '#FFFFFF'
         },

@@ -85,6 +85,7 @@ router-view {
 .container {
   margin-top: 90px;
   margin-left: 420px;
+  margin-bottom: 20px;
   border-radius: 10px;
   height: 760px;
   width: 1230px;
