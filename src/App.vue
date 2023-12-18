@@ -1,6 +1,8 @@
 <template>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <Navbar></Navbar>
+  <div id="app">
+    <Navbar></Navbar>
+  </div>
   <sidebar :key="Global.ActionList.length"></sidebar>
   <div class="container">
     <router-view />
@@ -14,35 +16,51 @@ import { useGlobalStore } from './stores/globalStore';
 const Global = useGlobalStore()
 
 Global.PopUpType == 'welcome'
+Global.httpGet(Global.APIStart + Global.APIkey)
 
 </script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&family=Roboto&display=swap');
 
-#app {
+html {
+  background-color: #424242;
+
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#logo {
+  font-family: 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #151515;
+  border-radius: 10px;
+  justify-content: center;
+  color: #FFFFFF;
+  margin-top: 0px;
+  padding: 10px;
+}
+
+#app {
+  border-radius: 10px;
   text-align: center;
-  color: #2c3e50;
-
+  justify-content: space-between;
   overflow: hidden;
-
-  display: grid;
-  grid-template-areas:
-    "navbar navbar navbar"
-    "ablauf func func"
-    "ablauf func func";
+  width: 100%;
+  display: flex;
 }
 
 h1 {
   display: flex;
   justify-content: center;
+  color: #FFFFFF;
 }
 
 nav {
   grid-area: navbar;
+  margin-left: 10px;
 }
 
 .sidenav {
@@ -65,11 +83,16 @@ router-view {
 }
 
 .container {
-  margin-left: 395px;
+  margin-top: 90px;
+  margin-left: 420px;
+  margin-bottom: 20px;
+  border-radius: 10px;
   height: 760px;
-  width: 1250px;
-  margin-top: 80px;
+  width: 1230px;
   position: fixed;
   overflow: scroll;
+  background-color: #212121;
+  display: flex;
+  flex-direction: column;
 }
 </style>

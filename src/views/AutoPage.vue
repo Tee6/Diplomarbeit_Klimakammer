@@ -1,7 +1,7 @@
 <template>
   <h1> Automatische Steuerung </h1>
   <div class="button-grid">
-    <ActionButton v-for="a of Features.Features" :action-name="a.name" :key="a.name" style="margin-top: 0px;">
+    <ActionButton v-for="a of Features.Features" :action-name="a.name" :key="a.name">
     </ActionButton>
     <PopUp :action-name="Global.activePopup" v-if="Global.showPopup">
     </PopUp>

@@ -1,9 +1,12 @@
 <template>
     <h1>Klimakammer Übersicht</h1>
     <StatusBox class="StatBox" v-for="a in Features.Features" :-f="a"></StatusBox>
+    <PopUp :action-name="Global.activePopup" v-if="Global.showPopup">
+    </PopUp>
 </template>
 
 <script lang="ts" setup>
+import PopUp from '@/components/Popup.vue'
 import StatusBox from '@/components/StatusBox.vue'
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()

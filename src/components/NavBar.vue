@@ -1,11 +1,11 @@
 <template>
     <nav>
-        <router-link class="title" to="/main">Klimakammer</router-link> |
+        <router-link class="navlink button-28 title" to="/main">Klimakammer</router-link>
         <router-link :class="{ activeTab: Global.PopUpType == 'auto' }" class="navlink button-28" role="button"
-            to="/auto">Auto
-        </router-link> |
+            to="/auto">Ablauf erstellen
+        </router-link>
         <router-link :class="{ activeTab: Global.PopUpType == 'manu' }" class="navlink button-28" role="button"
-            to="/manu">Manuell</router-link> |
+            to="/manu">Manuell</router-link>
         <router-link :class="{ activeTab: Global.PopUpType == 'liveweather' }" class="navlink button-28" role="button"
             to="/liveweather">LIVE Wetter</router-link>
     </nav>
@@ -25,23 +25,24 @@ router-view {
 }
 
 nav {
-    width: 97vw;
-    border-style: ridge;
     padding: 10px;
+    padding-left: 200px;
+    padding-right: 200px;
     display: flex;
-    align-items: center;
     z-index: 2;
-    background-color: white;
-    position: fixed;
+    background-color: #151515;
+    border-radius: 10px;
+    justify-content: center;
+    color: #FFFFFF;
+    width: 1239.15px;
 }
 
 nav a router-link {
     font-weight: bold;
-    color: #000000;
 }
 
 nav a.router-link-exact-active {
-    color: #000000;
+    color: #ffffff;
 }
 
 .title {
@@ -49,7 +50,9 @@ nav a.router-link-exact-active {
     font-size: 25px;
     font-family: serif;
     text-decoration: none;
-    color: black;
+    color: #FFFFFF;
+    letter-spacing: 2px;
+    padding-right: 0px;
 }
 
 .navlink {
@@ -62,7 +65,7 @@ nav a.router-link-exact-active {
     appearance: none;
     background-color: transparent;
     box-sizing: border-box;
-    color: #3B3B3B;
+    color: #FFFFFF;
     cursor: pointer;
     font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 20px;

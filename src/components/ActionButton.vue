@@ -1,5 +1,8 @@
 <template>
-    <button class="actionBtn button-29" role="button" @click="() => activatePopup(actionName)">{{ actionName }}</button>
+    <button v-if="Global.PopUpType == 'auto'" class="actionBtn button-29" role="button"
+        @click="() => activatePopup(actionName)">{{ actionName }}</button>
+    <button v-if="Global.PopUpType == 'manu'" class="actionBtn button-29" role="button" style="margin-left: 180px;"
+        @click="() => activatePopup(actionName)">Wert sofort ändern</button>
 </template>
 
 <script lang="ts" setup>
@@ -45,7 +48,6 @@ defineProps({ actionName: { type: String, required: true } })
     background-image: radial-gradient(100% 100% at 100% 0, #23a64f 0, #176c28 100%);
     border: 0;
     border-radius: 6px;
-    box-shadow: #176c28 0 2px 4px, #176c28 0 7px 13px -3px, #176c28 0 -3px 0 inset;
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
@@ -73,12 +75,7 @@ defineProps({ actionName: { type: String, required: true } })
     animation: StatusBoxAnimation 0.5s ease 0s 1 normal none;
 }
 
-.button-29:focus {
-    box-shadow: #176c28 0 0 0 1.5px inset, #176c28 0 2px 4px, #176c28 0 7px 13px -3px, #176c28 0 -3px 0 inset;
-}
-
 .button-29:hover {
-    box-shadow: #176c28 0 4px 8px, #176c28 0 7px 13px -3px, #176c28 0 -3px 0 inset;
     transform: translateY(-2px);
 }
 
