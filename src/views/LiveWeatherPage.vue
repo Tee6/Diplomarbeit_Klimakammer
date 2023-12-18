@@ -33,7 +33,7 @@
         <LineChart style="width: 30%" :chart-data="ChartStore.SunData" :key="Global.cityName"></LineChart>
         <LineChart v-if="Global.showRain" style="width: 30%" :chart-data="ChartStore.RainData" :key="Global.cityName">
         </LineChart>
-        <button class="actionBtn button-29" role="button">Apply1</button>
+        <button class="actionBtn button-29" role="button">Apply</button>
     </div>
 </template>
 
