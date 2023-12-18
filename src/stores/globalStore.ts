@@ -3,6 +3,8 @@ import { useFeatureStore } from "./featureStore";
 import { Feature } from "@/objects/Feature";
 import { Feat } from "@/objects/Feature";
 import { Action } from "@/objects/Feature"
+import { useChartStore } from "./ChartStore";
+
 export const useGlobalStore = defineStore('globalStore', {
     state: () => ({
         showPopup: false as boolean, // State Variable if PopUp is currently visible
@@ -21,6 +23,8 @@ export const useGlobalStore = defineStore('globalStore', {
         weatherNOW: '' as any,
         lon: '' as string,
         lat: '' as string,
+        cityName: '' as string,
+        countryName: '' as string,
         PictureLink: '' as string,
         MapArray: [] as Map<string, number>[],
 
@@ -29,8 +33,7 @@ export const useGlobalStore = defineStore('globalStore', {
         humidList: [] as number[],
         rainList: [] as number[],
         sunList: [] as number[],
-        uvList: [] as number[],
-        uvtimeList: [] as string[],
+        showRain: false as boolean,
     }),
     actions: ({
         dateBuilder() {
@@ -63,6 +66,7 @@ export const useGlobalStore = defineStore('globalStore', {
             return xmlHttp.responseText;
         },
         fetchWeather(City: string) {
+            this.CleanWeather()
             let APICall = 'http://api.openweathermap.org/geo/1.0/direct?q=' + City + '&limit=5&appid=' + this.APIkey
             this.weather = this.httpGet(APICall)
             this.weather = JSON.parse(this.weather)
@@ -70,33 +74,39 @@ export const useGlobalStore = defineStore('globalStore', {
                 console.log('Place not defined')
                 this.lat = '47.27140726748231'
                 this.lon = '9.631884405803934'
+                this.cityName = "Rankweil"
+                this.countryName = "AT"
             } else {
                 this.lat = this.weather[0].lat
                 this.lon = this.weather[0].lon
+                this.cityName = this.weather[0].name
+                this.countryName = this.weather[0].country
             }
-            this.weather = this.httpGet('https://api.openweathermap.org/data/2.5/forecast?lat=' + this.lat + '&lon=' + this.lon + '&appid=' + this.APIkey + '&units=metric')
+            this.weather = this.httpGet('https://api.openweathermap.org/data/2.5/onecall?lat=' + this.lat + '&lon=' + this.lon + '&appid=' + this.APIkey + '&units=metric')
             this.weather = JSON.parse(this.weather)
             console.log(this.weather)
-            this.weatherNOW = this.weather.list[0]
-            this.extractLists(this.weather.list.slice(0, this.samplesize), this.weather.city.sunrise, this.weather.city.sunset)
-
-            console.log(this.keyList)
-            if (this.weather.list[0].weather[0] === undefined) {
+            this.weatherNOW = this.weather.current
+            this.extractLists(this.weather.hourly.slice(0, this.samplesize))
+            if (this.weather.current.weather[0] === undefined) {
                 this.PictureLink = 'https://openweathermap.org/img/wn/undefined@2x.png'
             } else {
-                this.PictureLink = 'https://openweathermap.org/img/wn/' + this.weather.list[0].weather[0].icon + '@2x.png'
+                this.PictureLink = 'https://openweathermap.org/img/wn/' + this.weather.current.weather[0].icon + '@2x.png'
             }
+            useChartStore().updateCharts()
         },
-        extractLists(objects: any[], sunrise: number = 0, sunset: number = 0) {
+        extractLists(objects: any[]) {
+            this.showRain = false;
             for (const obj of objects) {
-                let sunintensity = 100
                 this.keyList.push(this.unixToTime(obj.dt));
-                this.tempList.push(obj.main.temp);
-                this.humidList.push(obj.main.humidity);
+                this.tempList.push(obj.temp);
+                this.humidList.push(obj.humidity);
+                this.sunList.push(obj.uvi);
                 if (obj.rain) {
-                    this.rainList.push(obj.rain);
+                    this.rainList.push(obj.rain['1h']);
+                    this.showRain = true;
+                } else {
+                    this.rainList.push(0);
                 }
-                this.getUV()
 
             }
         },
@@ -117,30 +127,8 @@ export const useGlobalStore = defineStore('globalStore', {
             this.keyList = []
             this.tempList = []
             this.humidList = []
+            this.sunList = []
+            this.rainList = []
         },
-        getUV() {
-            const UVHeaders = new Headers();
-            UVHeaders.append("x-access-token", "openuv-54nj2rlq0wefqj-io");
-            UVHeaders.append("Content-Type", "application/json");
-
-            const requestOptions: RequestInit = {
-                method: 'GET',
-                headers: UVHeaders,
-                redirect: 'follow'
-            };
-
-            fetch("https://api.openuv.io/api/v1/forecast?lat=51.5&lng=-0.11&alt=100&dt=", requestOptions)
-                .then(response => response.text())
-                .then(result => this.ExtractUVData(result))
-                .catch(error => console.log('error', error));
-        },
-        ExtractUVData(uvlist: any) {
-            uvlist = JSON.parse(uvlist)
-            console.log(uvlist)
-            for (const a of uvlist.result) {
-                this.uvList.push(a.uv)
-                this.uvtimeList.push(a.uv_time.slice(11, 19))
-            }
-        }
     })
 })

@@ -4,37 +4,43 @@
         <input type="text" class="search-bar" placeholder="Search..." v-model="query"
             @keydown.enter="Global.fetchWeather(query)" />
     </div>
-    <h1 v-if="Global.weatherNOW.main == null">Such nach einem Ort</h1>
-    <div class="weather-wrap" v-if="Global.weatherNOW.main != null">
+    <h1 v-if="Global.weatherNOW.temp == null">Such nach einem Ort</h1>
+    <div class="weather-wrap" v-if="Global.weatherNOW.temp != null">
         <div class="location-box">
             <img :src="Global.PictureLink">
-            <div class="location">{{ Global.weather.city.name }}, {{ Global.weather.city.country }}</div>
+            <div class="location">{{ Global.cityName }}, {{ Global.countryName }}</div>
             <div class="date">{{ Global.dateBuilder() }}</div>
         </div>
 
         <div class="weather-box">
             <h1 style="margin: 5px;">Temperatur</h1>
-            <div class="temp">{{ Math.round(Global.weatherNOW.main.temp) }}°c</div>
+            <div class="temp">{{ Math.round(Global.weatherNOW.temp) }}°C</div>
         </div>
         <div class="weather-box">
             <h1 style="margin: 5px;">Luftfeuchtigkeit</h1>
-            <div class="temp">{{ Math.round(Global.weatherNOW.main.humidity) }}%</div>
+            <div class="temp">{{ Math.round(Global.weatherNOW.humidity) }}%</div>
         </div>
         <div class="weather-box">
-            <h1 style="margin: 5px;">Sonne</h1>
-            <div class="temp">{{ 100 - Math.round(Global.weatherNOW.clouds.all) }}%</div>
+            <h1 style="margin: 5px;">UV Index</h1>
+            <div class="temp">{{ Global.weatherNOW.uvi }}</div>
         </div>
     </div>
-    <h1 v-if='Global.weatherNOW.main != null'> Vorhersage: </h1>
-    <div class="weather-wrap forecast" v-if='Global.weatherNOW.main != null'>
-        <LineChart style="width: 30%" :chart-data="TempData" :key="Global.keyList.length"></LineChart>
-        <LineChart style="width: 30%" :chart-data="HumidData" :key="Global.keyList.length"></LineChart>
-        <LineChart style="width: 30%" :chart-data="SunData" :key="Global.keyList.length"></LineChart>
+
+    <h1 v-if='Global.weatherNOW.temp != null'> Vorhersage: </h1>
+    <div class="weather-wrap forecast" v-if='Global.weatherNOW.temp != null' :key="Global.cityName">
+        <LineChart style="width: 30%" :chart-data="ChartStore.TempData" :key="Global.cityName"></LineChart>
+        <LineChart style="width: 30%" :chart-data="ChartStore.HumidData" :key="Global.cityName"></LineChart>
+        <LineChart style="width: 30%" :chart-data="ChartStore.SunData" :key="Global.cityName"></LineChart>
+        <LineChart v-if="Global.showRain" style="width: 30%" :chart-data="ChartStore.RainData" :key="Global.cityName">
+        </LineChart>
+        <button class="actionBtn button-29" role="button">Apply</button>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useFeatureStore } from '@/stores/featureStore';
+import { useChartStore } from '@/stores/ChartStore';
+const ChartStore = useChartStore()
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
 const FeatureStore = useFeatureStore()
@@ -47,43 +53,6 @@ import { LineChart } from 'vue-chart-3'
 Chart.register(...registerables);
 Chart.defaults.color = '#FFFFFF';
 Chart.defaults.borderColor = '#30621f'
-const TempData = {
-    labels: Global.keyList,
-    datasets: [
-        {
-            label: 'Temperatur',
-            data: Global.tempList,
-            borderColor: '#FFFFFF'
-        }
-    ],
-};
-const HumidData = {
-    labels: Global.keyList,
-    datasets: [
-        {
-            label: 'Luftfeuchtigkeit',
-            data: Global.humidList,
-            borderColor: '#FFFFFF'
-        },
-        {
-            label: 'Regen',
-            data: Global.rainList,
-            borderColor: '#FFFFFF'
-        }
-    ],
-};
-
-const SunData = {
-    labels: Global.uvtimeList,
-    datasets: [
-        {
-            label: 'Sonne',
-            data: Global.uvList,
-            borderColor: '#FFFFFF'
-        }
-    ],
-};
-Global.getUV()
 </script>
 
 <style>
@@ -174,12 +143,14 @@ main {
     display: flex;
     width: 100%;
     justify-content: space-evenly;
-    align-items: center;
 
     margin-top: 20px;
 }
 
 .forecast {
     flex-direction: row;
+    flex-wrap: wrap;
+    text-align: left;
+    align-items: center;
 }
 </style>
