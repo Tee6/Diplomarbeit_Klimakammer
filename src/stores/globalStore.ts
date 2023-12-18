@@ -65,7 +65,7 @@ export const useGlobalStore = defineStore('globalStore', {
         httpGet(theUrl: string) {
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open("GET", theUrl, false); // false for synchronous request
-            xmlHttp.send(null);
+            xmlHttp.send();
             return xmlHttp.responseText;
         },
         fetchWeather(City: string) {

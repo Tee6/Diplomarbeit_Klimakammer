@@ -28,11 +28,11 @@
 
     <h1 v-if='Global.weatherNOW.temp != null'> Vorhersage: </h1>
     <div class="weather-wrap forecast" v-if='Global.weatherNOW.temp != null' :key="Global.cityName">
-        <LineChart style="width: 30%" :chart-data="ChartStore.TempData" :key="Global.cityName"></LineChart>
-        <LineChart style="width: 30%" :chart-data="ChartStore.HumidData" :key="Global.cityName"></LineChart>
         <LineChart style="width: 30%" :chart-data="ChartStore.SunData" :key="Global.cityName"></LineChart>
+        <LineChart style="width: 30%" :chart-data="ChartStore.TempData" :key="Global.cityName"></LineChart>
         <LineChart v-if="Global.showRain" style="width: 30%" :chart-data="ChartStore.RainData" :key="Global.cityName">
         </LineChart>
+        <LineChart style="width: 30%" :chart-data="ChartStore.HumidData" :key="Global.cityName"></LineChart>
         <button class="actionBtn button-29" role="button" @click="Global.WeatherToAction()">Apply</button>
     </div>
 </template>
