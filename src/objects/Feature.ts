@@ -16,6 +16,12 @@ export interface Action {
     timeString: string,
 }
 
+export interface StatusUpdate {
+    Sonne: string,
+    Regen: string,
+    Luftfeuchtigkeit: string,
+    Temperatur: string,
+}
 
 export const Sonne: Feature = {
     id: 0,
@@ -46,3 +52,4 @@ export const Luftfeuchtigkeit: Feature = {
 };
 
 export const Feat = [Sonne, Temperatur, Regen, Luftfeuchtigkeit]
+export const ValueHistory: StatusUpdate[] = []
