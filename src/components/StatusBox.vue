@@ -11,14 +11,12 @@
             </div>
             <div class="content" v-if="Action?.id !== undefined">
                 <div style="margin-right: 10px; height: 50px;">
-                    Derzeitige {{ F?.value_name }}: {{ F?.istvalue }}%
+                    Derzeitige Intensität: {{ F?.istvalue }}%
                     <br>
-                    Erwartete {{ F?.value_name }}: {{ Action?.sollvalue }}%
+                    Erwartete Intensität: {{ Action?.sollvalue }}%
                 </div>
-                <LineChart v-if="Global.PopUpType == 'main'" style="width: 300px" :chart-data="testData"
-                    :key="testData.labels.length"></LineChart>
-
-
+                <LineChart v-if="Global.PopUpType == 'main'" style="width: 300px" :chart-data="StatusBoxData"
+                    :key="StatusBoxData.labels.length"></LineChart>
             </div>
 
             <div class="content" v-if="Action?.id == undefined">
@@ -56,7 +54,7 @@ let x = featureStore.CreateXaxis(featureStore.Featuremap)
 let Labels = x.get(pr.F?.name || '') ?? [0]
 let y = featureStore.CreateYaxis(featureStore.Featuremap)
 let LineData = y.get(pr.F?.name || '') ?? [0]
-const testData = {
+const StatusBoxData = {
     labels: Labels,
     datasets: [
         {

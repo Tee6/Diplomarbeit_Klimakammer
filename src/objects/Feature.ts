@@ -11,8 +11,7 @@ export interface Feature {
 export interface Action {
     id: number,
     name: string,
-    sollvalue: number,
-    value_name: string,
+    sollvalue: number
     time: number,
     timeString: string,
 }

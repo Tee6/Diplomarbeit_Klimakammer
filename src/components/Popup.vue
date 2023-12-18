@@ -81,15 +81,15 @@ function Confirm(del = false) {
         Global.TogglePopup()
         let FeatureClone = { ...featureStore.Features[l.id] }
         let minutes = FormTime.split(':')
-        let realminutes = parseInt(minutes[0]) * 60 + parseInt(minutes[1])
+        let AdvFormTime = FormTime + ':00'
+        let realminutes = parseInt(minutes[0]) * 60 * 60 + parseInt(minutes[1]) * 60
 
         const ActionClone: Action = {
             id: Global.ActionList.length + 1,
             name: Global.activePopup,
             sollvalue: FormValue1,
-            value_name: FeatureClone.value_name,
             time: realminutes,
-            timeString: FormTime
+            timeString: AdvFormTime
         }
         Global.ActionList.push(ActionClone)
         Global.TaskSort()

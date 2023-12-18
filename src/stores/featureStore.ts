@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { Feature } from '@/objects/Feature'
 import { Feat } from '@/objects/Feature'
 import { Action } from '@/objects/Feature'
+import { useGlobalStore } from './globalStore'
 
 export const useFeatureStore = defineStore('featureStore', {
     state: () => ({

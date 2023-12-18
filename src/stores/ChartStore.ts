@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { useGlobalStore } from '@/stores/globalStore';
+import { useFeatureStore } from '@/stores/featureStore';
 
 export const useChartStore = defineStore('chart', {
     state: () => ({
@@ -57,6 +58,6 @@ export const useChartStore = defineStore('chart', {
 
             this.SunData.labels = useGlobalStore().keyList
             this.SunData.datasets[0].data = useGlobalStore().sunList
-        }
+        },
     },
 });

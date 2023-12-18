@@ -33,7 +33,7 @@
         <LineChart style="width: 30%" :chart-data="ChartStore.SunData" :key="Global.cityName"></LineChart>
         <LineChart v-if="Global.showRain" style="width: 30%" :chart-data="ChartStore.RainData" :key="Global.cityName">
         </LineChart>
-        <button class="actionBtn button-29" role="button">Apply</button>
+        <button class="actionBtn button-29" role="button" @click="Global.WeatherToAction()">Apply</button>
     </div>
 </template>
 
@@ -53,6 +53,7 @@ import { LineChart } from 'vue-chart-3'
 Chart.register(...registerables);
 Chart.defaults.color = '#FFFFFF';
 Chart.defaults.borderColor = '#30621f'
+Chart.defaults.plugins.legend.display = true
 </script>
 
 <style>

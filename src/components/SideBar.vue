@@ -28,6 +28,7 @@ const Global = useGlobalStore()
     border-radius: 10px;
     margin-top: 98px;
     margin-left: 19px;
+    scroll-behavior: smooth;
 }
 
 .AblaufHeading {
