@@ -69,11 +69,12 @@ export const useGlobalStore = defineStore('globalStore', {
             return xmlHttp.responseText;
         },
         fetchWeather(City: string) {
+            if (City === '') { City = 'Rankweil' }
             this.CleanWeather()
             let APICall = 'http://api.openweathermap.org/geo/1.0/direct?q=' + City + '&limit=5&appid=' + this.APIkey
             this.weather = this.httpGet(APICall)
             this.weather = JSON.parse(this.weather)
-            if (this.weather[0] === undefined) {
+            if (this.weather[0] === undefined || this.weather.cod === '400') {
                 console.log('Place not defined')
                 this.lat = '47.27140726748231'
                 this.lon = '9.631884405803934'
@@ -103,7 +104,7 @@ export const useGlobalStore = defineStore('globalStore', {
                 this.keyList.push(this.unixToTime(obj.dt));
                 this.tempList.push(obj.temp);
                 this.humidList.push(obj.humidity);
-                this.sunList.push(obj.uvi);
+                this.sunList.push(this.scaleValue(obj.uvi, 0, 11));
                 if (obj.rain) {
                     this.rainList.push(obj.rain['1h']);
                     this.showRain = true;
@@ -112,6 +113,18 @@ export const useGlobalStore = defineStore('globalStore', {
                 }
 
             }
+        },
+        scaleValue(value: number, min: number, max: number) {
+            // Stelle sicher, dass der Wert nicht kleiner als der Mindestwert ist
+            value = Math.max(value, min);
+
+            // Stelle sicher, dass der Wert nicht größer als der Maximalwert ist
+            value = Math.min(value, max);
+
+            // Berechne den skalierten Wert im Bereich von 0 bis 100
+            var scaledValue = ((value - min) / (max - min)) * 100;
+
+            return scaledValue;
         },
         unixToTime(unixtime: number = 0) {
             // Erstelle ein Date-Objekt mit dem übergebenen Unix-Zeitstempel (in Millisekunden)
@@ -144,7 +157,7 @@ export const useGlobalStore = defineStore('globalStore', {
                 const SunAction: Action = {
                     id: this.ActionList.length + 1,
                     name: 'Sonne',
-                    sollvalue: a.uvi,
+                    sollvalue: parseFloat(this.scaleValue(a.uvi, 0, 11).toFixed(2)),
                     time: i * 3600,
                     timeString: this.unixToTime(i * 3600),
                 }
