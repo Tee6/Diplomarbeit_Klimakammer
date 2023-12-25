@@ -10,7 +10,9 @@ export const useReglerStore = defineStore('ReglerStore', {
         RainURL: '/water/flow',
         HumidURL: '/air/humidity',
         TempURL: '/air/temperature',
-
+        DoorURL: '/misc/door',
+        PSUstatusURL: '/psu/status',
+        PSUvoltURL: '/psu/voltage',
         History: [] as StatusUpdate[],
         CurrentStatus: new Map<string, any>()
     }),
@@ -22,11 +24,17 @@ export const useReglerStore = defineStore('ReglerStore', {
                 Regen: this.httpGetValue(this.BackEndIP + this.RainURL),
                 Luftfeuchtigkeit: this.httpGetValue(this.BackEndIP + this.HumidURL),
                 Temperatur: this.httpGetValue(this.BackEndIP + this.TempURL),
+                Tuer: this.httpGetValue(this.BackEndIP + this.DoorURL),
+                PSUstatus: this.httpGetValue(this.BackEndIP + this.PSUstatusURL),
+                PSUvolt: this.httpGetValue(this.BackEndIP + this.PSUvoltURL)
             }
             this.CurrentStatus.set('Sonne', kammerValues.Sonne)
             this.CurrentStatus.set('Regen', kammerValues.Regen)
             this.CurrentStatus.set('Luftfeuchtigkeit', kammerValues.Luftfeuchtigkeit)
             this.CurrentStatus.set('Temperatur', kammerValues.Temperatur)
+            this.CurrentStatus.set('Tuer', kammerValues.Tuer)
+            this.CurrentStatus.set('PSUstatus', kammerValues.PSUstatus)
+            this.CurrentStatus.set('PSUvolt', kammerValues.PSUvolt)
             this.History.push(kammerValues)
         },
         httpGetValue(theUrl: string, API: boolean = true) {

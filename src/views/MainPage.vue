@@ -8,21 +8,21 @@
 
 
             <div class="box" style="margin-left: 42px;margin-right: 42px; height: 100px;">
-                <div class="heading">
+                <div class="heading misc-boxHeading">
                     PSU
                 </div>
                 <div class="content psu">
-                    <span class="statustitle">PSU Status:</span>
-                    <span class="statustitle">PSU Voltage:</span>
-                    <span class="statustitle">PSU Current:</span>
+                    <span class="statustitle">PSU Status: {{ ReglerStore.CurrentStatus.get('PSUstatus') }}</span>
+                    <span class="statustitle">PSU Voltage: {{ ReglerStore.CurrentStatus.get('PSUvolt') }}</span>
+                    <span class="statustitle">PSU Current: {{ ReglerStore.CurrentStatus.get('PSUvolt') }}</span>
                 </div>
             </div>
             <div class="box" style="margin-left: 42px;margin-right: 42px; height: 100px;">
-                <div class="heading">
+                <div class="heading misc-boxHeading">
                     Tür
                 </div>
                 <div class="content psu">
-                    <span class="statustitle">Tür Status:</span>
+                    <span class="statustitle">Tür Status: {{ DoorStatus() }}</span>
                 </div>
             </div>
         </div>
@@ -38,12 +38,24 @@ import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
 import { useFeatureStore } from '@/stores/featureStore';
 const Features = useFeatureStore()
+import { useReglerStore } from '@/stores/CtrlLoopStore';
+const ReglerStore = useReglerStore()
 
 Global.PopUpType = 'main'
 Features.Fill()
+function DoorStatus() {
+    if (ReglerStore.CurrentStatus.get('Tuer') > 1) {
+        return 'Offen'
+    }
+}
+
 </script>
 
 <style>
+.misc-boxHeading {
+    padding-right: 300px;
+}
+
 .psu {
     display: flex;
     flex-direction: column;

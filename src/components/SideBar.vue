@@ -17,7 +17,7 @@ const Global = useGlobalStore()
 <style>
 .sidenav {
     position: relative;
-    height: 760px;
+    height: 740px;
     width: 400px;
     position: fixed;
     top: 0;

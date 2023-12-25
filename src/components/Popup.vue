@@ -15,7 +15,7 @@
                 <input type="number" placeholder="%" v-model="FormValue1" />
 
                 <div v-show="Global.PopUpType == 'auto'" style="margin-top: 15px;">
-                    <label> Time after Start in minutes </label>
+                    <label> Startzeit in Stunden </label>
                     <input id="test" type="time" v-model="FormTime">
                 </div>
             </form>

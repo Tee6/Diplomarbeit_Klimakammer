@@ -1,7 +1,10 @@
 <template>
     <h1> Manuelle Steuerung </h1>
-    <StatusBox style="width: 65%;" :key="Global.ActionList.length" class="StatBox" v-for="a in Features.Features" :-f="a">
-    </StatusBox>
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
+        <StatusBox style="width: fit-content;" :key="Global.ActionList.length" class="StatBox"
+            v-for="a in Features.Features" :-f="a">
+        </StatusBox>
+    </div>
     <PopUp :action-name="Global.activePopup" v-if="Global.showPopup">
     </PopUp>
 </template>

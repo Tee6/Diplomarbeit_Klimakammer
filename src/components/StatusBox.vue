@@ -2,7 +2,7 @@
     <div style="display: grid;">
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-        <div class="box Statbox" style="width: 100%;">
+        <div class="box Statbox">
             <div class="heading">
                 <span class="material-symbols-outlined">
                     {{ F?.iconLink }}
@@ -15,15 +15,15 @@
                     <br>
                     Erwartete Intensität: {{ Action?.sollvalue }}%
                 </div>
-                <LineChart v-if="Global.PopUpType == 'main'" style="width: 300px" :chart-data="StatusBoxData"
-                    :key="StatusBoxData.labels.length"></LineChart>
+                <LineChart v-if="Global.PopUpType == 'main'" style="width: 300px; margin-right: 20px;"
+                    :chart-data="StatusBoxData" :key="StatusBoxData.labels.length"></LineChart>
             </div>
 
             <div class="content" v-if="Action?.id == undefined">
                 Derzeitige Intensität: {{ currentValue }}% <br>
                 No Action defined
             </div>
-            <ActionButton :action-name="F?.name ?? 'Change Value'"> Change Value
+            <ActionButton style="margin-left: 10px" :action-name="F?.name ?? 'Change Value'"> Change Value
             </ActionButton>
 
         </div>
@@ -74,6 +74,10 @@ const StatusBoxData = {
 </script>
 
 <style>
+.Statbox {
+    width: 100%;
+}
+
 .box {
     color: #FFFFFF;
     border-radius: 9px;
@@ -89,13 +93,13 @@ const StatusBoxData = {
     padding-top: 5px;
     padding-left: 10px;
     padding-bottom: 5px;
-    padding-right: 300px;
     display: flex;
 }
 
 .content {
     padding-top: 5px;
     padding-left: 10px;
+    padding-right: 12px;
     display: flex;
 }
 

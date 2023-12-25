@@ -90,7 +90,7 @@ router-view {
   margin-left: 420px;
   margin-bottom: 20px;
   border-radius: 10px;
-  height: 760px;
+  height: 740px;
   width: 1230px;
   position: fixed;
   overflow: scroll;

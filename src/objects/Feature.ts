@@ -21,6 +21,9 @@ export interface StatusUpdate {
     Regen: string,
     Luftfeuchtigkeit: string,
     Temperatur: string,
+    Tuer: string,
+    PSUstatus: string,
+    PSUvolt: string
 }
 
 export const Sonne: Feature = {
