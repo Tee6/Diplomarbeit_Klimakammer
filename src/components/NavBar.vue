@@ -13,7 +13,6 @@
 <script lang="ts" setup>
 import { useGlobalStore } from '@/stores/globalStore'
 const Global = useGlobalStore()
-
 </script>
 <style>
 router-view {
@@ -25,6 +24,7 @@ router-view {
 }
 
 nav {
+    align-items: center;
     padding: 10px;
     padding-left: 200px;
     padding-right: 200px;

@@ -13,13 +13,14 @@ export const useReglerStore = defineStore('ReglerStore', {
         DoorURL: '/misc/door',
         PSUstatusURL: '/psu/status',
         PSUvoltURL: '/psu/voltage',
-        History: [] as StatusUpdate[],
+        History: [] as Map<string, any>[],
         CurrentStatus: new Map<string, any>()
     }),
     actions: {
         getKammerValues() {
             this.CurrentStatus.clear()
             const kammerValues: StatusUpdate = {
+                Time: Date.now(),
                 Sonne: this.httpGetValue(this.BackEndIP + this.SunURL),
                 Regen: this.httpGetValue(this.BackEndIP + this.RainURL),
                 Luftfeuchtigkeit: this.httpGetValue(this.BackEndIP + this.HumidURL),
@@ -28,6 +29,7 @@ export const useReglerStore = defineStore('ReglerStore', {
                 PSUstatus: this.httpGetValue(this.BackEndIP + this.PSUstatusURL),
                 PSUvolt: this.httpGetValue(this.BackEndIP + this.PSUvoltURL)
             }
+            this.CurrentStatus.set('Time', kammerValues.Time)
             this.CurrentStatus.set('Sonne', kammerValues.Sonne)
             this.CurrentStatus.set('Regen', kammerValues.Regen)
             this.CurrentStatus.set('Luftfeuchtigkeit', kammerValues.Luftfeuchtigkeit)
@@ -35,7 +37,8 @@ export const useReglerStore = defineStore('ReglerStore', {
             this.CurrentStatus.set('Tuer', kammerValues.Tuer)
             this.CurrentStatus.set('PSUstatus', kammerValues.PSUstatus)
             this.CurrentStatus.set('PSUvolt', kammerValues.PSUvolt)
-            this.History.push(kammerValues)
+            this.History.push(this.CurrentStatus)
+
         },
         httpGetValue(theUrl: string, API: boolean = true) {
             var xmlHttpx = new XMLHttpRequest();
@@ -51,14 +54,30 @@ export const useReglerStore = defineStore('ReglerStore', {
             }
             return val
         },
-        ChangeTemp() {
-            console.log('ChangeTemp')
+        httpSetValue(theUrl: string, value: string) {
+            var xmlHttpx = new XMLHttpRequest();
+            xmlHttpx.open("POST", theUrl, false); // false for synchronous request
+            xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xmlHttpx.send(value);
         },
-        ChangeSun() {
-            console.log('Change Sun')
+        createHistoryMap() {
+            // Erstelle eine Map, um Daten für jede Eigenschaft zu speichern
+            const propertyDataMap = new Map();
+
+            // Iteriere durch die Historie und fülle die Map
+            for (const statusMap of this.History) {
+                for (const [key, value] of statusMap) {
+                    // Wenn die Eigenschaft noch nicht in der Map enthalten ist, erstelle ein neues Array für sie
+                    if (!propertyDataMap.has(key)) {
+                        propertyDataMap.set(key, []);
+                    }
+
+                    // Füge den Wert zur entsprechenden Eigenschaft hinzu
+                    propertyDataMap.get(key).push(value);
+                }
+            }
+            console.log(propertyDataMap.get('Sonne'))
         },
-        ChangeHumid() {
-            console.log('Change Humid')
-        }
+
     }
 })

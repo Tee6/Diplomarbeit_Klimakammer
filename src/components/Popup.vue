@@ -55,6 +55,7 @@ function findFeature() {
     }
 }
 function Confirm(del = false) {
+    Global.Changed = "true"
     if (del) {
         const index = Global.ActionList.findIndex(obj => obj.id === Global.ActionID)
         if (index !== undefined) {

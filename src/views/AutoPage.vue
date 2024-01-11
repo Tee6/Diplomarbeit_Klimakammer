@@ -1,5 +1,7 @@
 <template>
-  <h1> Automatische Steuerung </h1>
+  <div class="mainheading">
+    <h1> Automatische Steuerung </h1>
+  </div>
   <div class="button-grid">
     <ActionButton v-for="a of Features.Features" :action-name="a.name" :key="a.name">
     </ActionButton>

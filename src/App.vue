@@ -16,11 +16,12 @@ import { useGlobalStore } from './stores/globalStore';
 const Global = useGlobalStore()
 import { useReglerStore } from './stores/CtrlLoopStore';
 const ReglerStore = useReglerStore()
+
 ReglerStore.getKammerValues()
+
 Global.PopUpType == 'welcome'
 Global.httpGet(Global.APIStart + Global.APIkey)
 
-//ReglerStore.getKammerValues()
 </script>
 
 <style>

@@ -2,6 +2,7 @@ export interface Feature {
     id: number,
     name: string,
     value_name: string,
+    url: string,
     forecast?: any[]
     istvalue?: number,
     iconLink?: string,
@@ -17,6 +18,7 @@ export interface Action {
 }
 
 export interface StatusUpdate {
+    Time: number,
     Sonne: string,
     Regen: string,
     Luftfeuchtigkeit: string,
@@ -31,6 +33,7 @@ export const Sonne: Feature = {
     name: 'Sonne',
     value_name: 'Intensität',
     iconLink: 'sunny',
+    url: '/sun/intensity',
 };
 
 export const Temperatur: Feature = {
@@ -38,20 +41,23 @@ export const Temperatur: Feature = {
     name: 'Temperatur',
     value_name: 'Intensität',
     iconLink: 'thermostat',
+    url: '/air/temperature',
 };
 
 export const Regen: Feature = {
     id: 1,
     name: 'Regen',
     value_name: 'Intensität',
-    iconLink: 'rainy'
+    iconLink: 'rainy',
+    url: '/water/flow',
 };
 
 export const Luftfeuchtigkeit: Feature = {
     id: 2,
     name: 'Luftfeuchtigkeit',
     value_name: 'Prozent',
-    iconLink: 'humidity_percentage'
+    iconLink: 'humidity_percentage',
+    url: '/air/humidity',
 };
 
 export const Feat = [Sonne, Temperatur, Regen, Luftfeuchtigkeit]

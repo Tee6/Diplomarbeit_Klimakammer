@@ -7,6 +7,11 @@ import { useChartStore } from "./ChartStore";
 
 export const useGlobalStore = defineStore('globalStore', {
     state: () => ({
+        // Change this to your needs
+        samplesize: 20 as number, // 40 max
+        updatefrequency: 10000 as number, // time in milliseconds
+        swift: true as boolean, // swift mode for Graphs
+
         //#region Features
         showPopup: false as boolean, // State Variable if PopUp is currently visible
         activePopup: '' as string, // What kind of Action is going to be added e.g. Sun, Rain,....
@@ -15,12 +20,16 @@ export const useGlobalStore = defineStore('globalStore', {
         ActionID: 0 as number,      // continous variable to identify each Action
         ActionList: [] as Action[], // List of every Action that has been created
         CurrentAction: 0 as number, // ID of Last or current Action
+        Changed: "false" as string,  // State Variable if an Action has been changed,
+        UpdateID: 0 as number,       // ID of the last Update
         //#endregion Features
-
+        //#region Status
+        StartTime: 0 as number, // Unix Time when the Simulation started
+        //#endregion Status
         //#region API&Weather
         APIkey: 'a7121575dbfca3daa1bf7948f59c14dd' as string,
         APIStart: 'http://api.openweathermap.org/data/2.5/weather?id=524901&appid=' as string,
-        samplesize: 20 as number, // 40 max
+
         weather: '' as any,
         weatherNOW: '' as any,
         lon: '' as string,
@@ -147,6 +156,7 @@ export const useGlobalStore = defineStore('globalStore', {
             this.rainList = []
         },
         WeatherToAction() {
+            this.Changed = "true"
             this.ActionList = []
             let i = 0
             let sampleWeather = this.weather.hourly.slice(0, this.samplesize)
@@ -202,6 +212,67 @@ export const useGlobalStore = defineStore('globalStore', {
             }
             this.TaskSort()
             useFeatureStore().UpdateMap(this.ActionList)
+        },
+        httpSetValue(theUrl: string, value: string) {
+            var xmlHttpx = new XMLHttpRequest();
+            xmlHttpx.open("POST", theUrl, false); // false for synchronous request
+            xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xmlHttpx.send(value);
+        },
+        convertToJSON() {
+            // Initialisiere das Ausgabeobjekt mit der gewünschten Struktur
+            let outputJSON = {
+                "UpdateID": this.UpdateID,
+                "Features": {} as Record<string, Action[]>
+            };
+            this.UpdateID++
+
+            // Iteriere über jedes Objekt in der Eingabeliste
+            this.ActionList.forEach(item => {
+                // Überprüfe, ob das Feature bereits im Ausgabeobjekt existiert
+                if (!outputJSON.Features.hasOwnProperty(item.name)) {
+                    outputJSON.Features[item.name] = [];
+                }
+
+                // Füge das neue Objekt mit den entsprechenden Werten hinzu
+                outputJSON.Features[item.name].push({
+                    "id": item.id,
+                    "name": item.name,
+                    "sollvalue": item.sollvalue,
+                    "time": item.time,
+                    "timeString": item.timeString
+                });
+            });
+
+            return outputJSON;
+        },
+        save() {
+            this.Changed = "false"
+            this.StartTime = Date.now()
+            console.log(this.convertToJSON())
+        },
+        timestampZuDatumUhrzeit(unixTimestamp: number) {
+            // Erstelle ein Date-Objekt mit dem Unix-Timestamp (in Millisekunden)
+            let datumUhrzeit = new Date(unixTimestamp);
+
+            // Monatsnamen für die Ausgabe
+            const monatsNamen = [
+                "Januar", "Februar", "März", "April", "Mai", "Juni",
+                "Juli", "August", "September", "Oktober", "November", "Dezember"
+            ];
+
+            // Extrahiere Datum und Uhrzeit-Komponenten
+            let tag = datumUhrzeit.getDate();
+            let monat = monatsNamen[datumUhrzeit.getMonth()];
+            let jahr = datumUhrzeit.getFullYear();
+            let stunde = ("0" + datumUhrzeit.getHours()).slice(-2);
+            let minute = ("0" + datumUhrzeit.getMinutes()).slice(-2);
+            let sekunde = ("0" + datumUhrzeit.getSeconds()).slice(-2);
+
+            // Formatiere das Datum und die Uhrzeit
+            let formatiertesDatumUhrzeit = `${tag}. ${monat} ${jahr} ${stunde}:${minute}:${sekunde}`;
+
+            return formatiertesDatumUhrzeit;
         }
     })
 })

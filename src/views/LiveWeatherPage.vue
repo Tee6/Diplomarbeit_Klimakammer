@@ -1,5 +1,7 @@
 <template>
-    <h1> Live Wetter </h1>
+    <div class="mainheading">
+        <h1> Live Wetter </h1>
+    </div>
     <div class="search-box">
         <input type="text" class="search-bar" placeholder="Search..." v-model="query"
             @keydown.enter="Global.fetchWeather(query)" />

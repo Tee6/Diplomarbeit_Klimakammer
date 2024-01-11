@@ -1,8 +1,12 @@
 <template>
-    <h1>Klimakammer Übersicht</h1>
+    <div class="mainheading">
+        <h1>Klimakammer Übersicht</h1>
+        <p v-if="Global.StartTime > 0">Starttime: {{ Global.timestampZuDatumUhrzeit(Global.StartTime) }}</p>
+    </div>
     <div class="overview">
         <div>
-            <StatusBox class="StatBox" v-for="a in Features.Features" :-f="a"></StatusBox>
+            <StatusBox class="StatBox" v-for="a in Features.Features" :-f="a">
+            </StatusBox>
         </div>
         <div>
 
@@ -33,6 +37,7 @@
 
 <script lang="ts" setup>
 import PopUp from '@/components/Popup.vue'
+import { useChartStore } from '@/stores/ChartStore';
 import StatusBox from '@/components/StatusBox.vue'
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
@@ -52,6 +57,18 @@ function DoorStatus() {
 </script>
 
 <style>
+.mainheading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 42px;
+    margin-right: 42px;
+    margin-top: 20px;
+    align-items: center;
+
+    color: #FFFFFF;
+}
+
 .misc-boxHeading {
     padding-right: 300px;
 }
