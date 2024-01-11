@@ -1,5 +1,7 @@
 <template>
-    <h1> Live Wetter </h1>
+    <div class="mainheading">
+        <h1> Live Wetter </h1>
+    </div>
     <div class="search-box">
         <input type="text" class="search-bar" placeholder="Search..." v-model="query"
             @keydown.enter="Global.fetchWeather(query)" />
@@ -28,12 +30,12 @@
 
     <h1 v-if='Global.weatherNOW.temp != null'> Vorhersage: </h1>
     <div class="weather-wrap forecast" v-if='Global.weatherNOW.temp != null' :key="Global.cityName">
-        <LineChart style="width: 30%" :chart-data="ChartStore.TempData" :key="Global.cityName"></LineChart>
-        <LineChart style="width: 30%" :chart-data="ChartStore.HumidData" :key="Global.cityName"></LineChart>
         <LineChart style="width: 30%" :chart-data="ChartStore.SunData" :key="Global.cityName"></LineChart>
+        <LineChart style="width: 30%" :chart-data="ChartStore.TempData" :key="Global.cityName"></LineChart>
         <LineChart v-if="Global.showRain" style="width: 30%" :chart-data="ChartStore.RainData" :key="Global.cityName">
         </LineChart>
-        <button class="actionBtn button-29" role="button">Apply</button>
+        <LineChart style="width: 30%" :chart-data="ChartStore.HumidData" :key="Global.cityName"></LineChart>
+        <button class="actionBtn button-29" role="button" @click="Global.WeatherToAction()">Apply</button>
     </div>
 </template>
 
@@ -53,6 +55,7 @@ import { LineChart } from 'vue-chart-3'
 Chart.register(...registerables);
 Chart.defaults.color = '#FFFFFF';
 Chart.defaults.borderColor = '#30621f'
+Chart.defaults.plugins.legend.display = true
 </script>
 
 <style>
@@ -120,7 +123,7 @@ main {
     display: inline-block;
     padding: 10px 25px;
     color: #FFF;
-    font-size: 102px;
+    font-size: 80px;
     font-weight: 900;
 
     text-shadow: 3px 6px rgba(0, 0, 0, 0.25);

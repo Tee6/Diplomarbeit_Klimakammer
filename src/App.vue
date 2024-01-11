@@ -14,6 +14,10 @@ import Navbar from '@/components/NavBar.vue'
 import sidebar from '@/components/SideBar.vue'
 import { useGlobalStore } from './stores/globalStore';
 const Global = useGlobalStore()
+import { useReglerStore } from './stores/CtrlLoopStore';
+const ReglerStore = useReglerStore()
+
+ReglerStore.getKammerValues()
 
 Global.PopUpType == 'welcome'
 Global.httpGet(Global.APIStart + Global.APIkey)
@@ -87,7 +91,7 @@ router-view {
   margin-left: 420px;
   margin-bottom: 20px;
   border-radius: 10px;
-  height: 760px;
+  height: 740px;
   width: 1230px;
   position: fixed;
   overflow: scroll;

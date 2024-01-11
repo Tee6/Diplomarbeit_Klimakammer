@@ -5,7 +5,6 @@ import router from './router'
 import { createPinia } from 'pinia'
 import LoadScript from "vue-plugin-load-script";
 
-
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
 
