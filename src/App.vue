@@ -1,5 +1,7 @@
 <template>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <div id="app">
     <Navbar></Navbar>
   </div>
@@ -7,9 +9,11 @@
   <div class="container">
     <router-view />
   </div>
+  <TxtToSpeechButton></TxtToSpeechButton>
 </template>
 
 <script lang="ts" setup>
+import TxtToSpeechButton from '@/components/TxtToSpeechButton.vue';
 import Navbar from '@/components/NavBar.vue'
 import sidebar from '@/components/SideBar.vue'
 import { useGlobalStore } from './stores/globalStore';

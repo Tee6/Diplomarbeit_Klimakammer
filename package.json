@@ -18,6 +18,7 @@
     "core-js": "^3.8.3",
     "eslint": "^8.51.0",
     "pinia": "^2.1.7",
+    "recordrtc": "^5.6.2",
     "vue": "^3.2.13",
     "vue-chart-3": "^3.1.8",
     "vue-plugin-load-script": "^2.1.1",
