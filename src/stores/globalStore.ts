@@ -9,7 +9,7 @@ export const useGlobalStore = defineStore('globalStore', {
     state: () => ({
         // Change this to your needs
         samplesize: 20 as number, // 40 max
-        updatefrequency: 10000 as number, // time in milliseconds
+        updatefrequency: 15000 as number, // time in milliseconds
         swift: true as boolean, // swift mode for Graphs
 
         //#region Features
