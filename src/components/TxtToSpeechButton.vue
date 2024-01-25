@@ -9,6 +9,7 @@
 </template>
 
 <script setup lang="ts">
+import { useReglerStore } from '@/stores/CtrlLoopStore';
 import { ref } from 'vue'
 let active = ref(false);
 let txtactive = ref(false);
@@ -32,10 +33,8 @@ async function startRecording() {
         mediaRecorder.onstop = () => {
             const recordedBlob = new Blob(recordedChunks, { type: 'audio/mp3' });
             console.log(recordedBlob)
-            const downloadLink = document.createElement('a');
-            downloadLink.href = URL.createObjectURL(recordedBlob);
-            //downloadLink.download = 'aufnahme.mp3';
-            //downloadLink.click();
+
+            useReglerStore().sendAudio(recordedBlob);
 
             recordedChunks = [];
         };
