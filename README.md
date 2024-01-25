@@ -32,9 +32,9 @@ Zur Steuerung der Kammer dient eine Website. Dieses Repository behandelt das Fro
 ## Screenshots
 
 Startseite der Website:
-![Startseite der Website](hWebsiteBilder\Übersicht25_12.png)
+![Startseite der Website](WebsiteBilder\Übersicht25_12.png)
 da keine Abläufe definiert sind, ist nur der derzeitig gemossene Wert zu sehen.
-![Startseite wenn Aktionen definiert sind](hWebsiteBilder\Übersichtfilled25_12.png)
+![Startseite wenn Aktionen definiert sind](WebsiteBilder\Übersichtfilled25_12.png)
 
 ## Danksagung
 
