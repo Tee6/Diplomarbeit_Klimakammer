@@ -16,7 +16,7 @@ export const useChartStore = defineStore('chart', {
             labels: [],
             datasets: [
                 {
-                    label: 'Temperatur in °C soll',
+                    label: 'Temperatur in °C',
                     data: [],
                     borderColor: '#FFFFFF'
                 },
