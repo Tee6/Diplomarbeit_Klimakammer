@@ -13,6 +13,7 @@ export const useReglerStore = defineStore('ReglerStore', {
         DoorURL: '/misc/door',
         PSUstatusURL: '/psu/status',
         PSUvoltURL: '/psu/voltage',
+        TTSURL: '/TTS',
         History: [] as Map<string, any>[],
         CurrentStatus: new Map<string, any>()
     }),
@@ -78,6 +79,15 @@ export const useReglerStore = defineStore('ReglerStore', {
             }
             console.log(propertyDataMap.get('Sonne'))
         },
+        sendAudio(value: any) {
+            var xmlHttpx = new XMLHttpRequest();
+            xmlHttpx.open("POST", this.BackEndIP + this.TTSURL, false); // false for synchronous request
+            xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
+            console.log("Blob sent")
+            let form = new FormData();
+            form.append("file", value, "aufnahme.mp3");
+            xmlHttpx.send(form);
+        }
 
     }
 })
