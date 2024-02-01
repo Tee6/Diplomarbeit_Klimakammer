@@ -273,6 +273,18 @@ export const useGlobalStore = defineStore('globalStore', {
             let formatiertesDatumUhrzeit = `${tag}. ${monat} ${jahr} ${stunde}:${minute}:${sekunde}`;
 
             return formatiertesDatumUhrzeit;
+        },
+        createTimedAction(Feature: string, time: number, sollvalue: number) {
+            let action: Action = {
+                id: this.ActionList.length + 1,
+                name: Feature,
+                sollvalue: sollvalue,
+                time: time,
+                timeString: this.unixToTime(time),
+            }
+            this.ActionList.push(action)
+            this.TaskSort()
+            useFeatureStore().UpdateMap(this.ActionList)
         }
     })
 })

@@ -1,5 +1,7 @@
 <template>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Klimakammer Steuerung</title>
+  <link rel="icon" href="https://icon-library.com/images/google-weather-icon/google-weather-icon-8.jpg">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <div id="app">
@@ -19,12 +21,17 @@ import sidebar from '@/components/SideBar.vue'
 import { useGlobalStore } from './stores/globalStore';
 const Global = useGlobalStore()
 import { useReglerStore } from './stores/CtrlLoopStore';
+import { useFeatureStore } from './stores/featureStore';
 const ReglerStore = useReglerStore()
 
 ReglerStore.getKammerValues()
 
 Global.PopUpType == 'welcome'
 Global.httpGet(Global.APIStart + Global.APIkey)
+
+
+
+
 
 </script>
 
@@ -102,5 +109,6 @@ router-view {
   background-color: #212121;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 </style>

@@ -18,6 +18,11 @@ let recordedChunks: Blob[] = [];
 function removeText() {
     txtactive.value = false
 }
+
+let testString = '{"Command": 2,"Feature": "Sonne","data": [{"value": 50,"Time": 234875842758,"Feature": "Sonne"},{"Feature": "Sonne","value": 50},{"Place": "Rankweil"}]}'
+
+
+
 async function startRecording() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -35,6 +40,7 @@ async function startRecording() {
             console.log(recordedBlob)
 
             useReglerStore().sendAudio(recordedBlob);
+            useReglerStore().createActionfromTTS(JSON.parse(testString))
 
             recordedChunks = [];
         };

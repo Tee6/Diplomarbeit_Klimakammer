@@ -3,6 +3,25 @@ import { StatusUpdate } from '@/objects/Feature'
 import { useGlobalStore } from './globalStore'
 import { useFeatureStore } from './featureStore'
 
+interface TTSJson {
+    "Command": number,
+    "Feature": string,
+    "data": [
+        {
+            "value": number,
+            "Time": number,
+            "Feature": string
+        },
+        {
+            "Feature": string,
+            "value": number
+        },
+        {
+            "Place": string
+        }
+    ]
+}
+
 export const useReglerStore = defineStore('ReglerStore', {
     state: () => ({
         BackEndIP: 'http://13.48.59.20',
@@ -87,7 +106,19 @@ export const useReglerStore = defineStore('ReglerStore', {
             let form = new FormData();
             form.append("file", value, "aufnahme.mp3");
             xmlHttpx.send(form);
-        }
-
+        },
+        createActionfromTTS(inputJson: TTSJson) {
+            if (inputJson.Command == 0) {
+                console.log("Setting Timed Feature Value")
+                useGlobalStore().createTimedAction(inputJson.data[0].Feature, inputJson.data[0].Time, inputJson.data[0].value,)
+            } else if (inputJson.Command == 1) {
+                console.log("Setting Feature Value")
+                useGlobalStore().createTimedAction(inputJson.data[1].Feature, 0, inputJson.data[1].value)
+            } else if (inputJson.Command == 2) {
+                console.log("Setting Live Weather")
+                useGlobalStore().fetchWeather(inputJson.data[2].Place)
+                useGlobalStore().WeatherToAction()
+            }
+        },
     }
 })

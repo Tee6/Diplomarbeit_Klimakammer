@@ -77,24 +77,13 @@ function Confirm(del = false) {
     }
     if (Global.Edittype == "add") {
         if (FormTime == undefined) {
-            FormTime = getCurrentTime()
+            FormTime = "00:00"
         }
         Global.TogglePopup()
-        let FeatureClone = { ...featureStore.Features[l.id] }
         let minutes = FormTime.split(':')
-        let AdvFormTime = FormTime + ':00'
         let realminutes = parseInt(minutes[0]) * 60 * 60 + parseInt(minutes[1]) * 60
 
-        const ActionClone: Action = {
-            id: Global.ActionList.length + 1,
-            name: Global.activePopup,
-            sollvalue: FormValue1,
-            time: realminutes,
-            timeString: AdvFormTime
-        }
-        Global.ActionList.push(ActionClone)
-        Global.TaskSort()
-        featureStore.UpdateMap(Global.ActionList)
+        Global.createTimedAction(Global.activePopup, realminutes, FormValue1)
     }
     if (Global.Edittype == 'edit') {
         const index = Global.ActionList.findIndex(obj => obj.id === Global.ActionID)

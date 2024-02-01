@@ -38,6 +38,6 @@ da keine Abläufe definiert sind, ist nur der derzeitig gemossene Wert zu sehen.
 
 ## Danksagung
 
-- [WolfVision](https://wolfvision.com/de)
-- [SANLight](https://www.sanlight.com/)
-- [HTL Rankweil](https://www.htl-rankweil.at/)
+- [WolfVision](https://wolfvision.com/de) - Partnerfirma
+- [SANLight](https://www.sanlight.com/) - Unterstützung bei Sonnenlicht
+- [HTL Rankweil](https://www.htl-rankweil.at/) - Bildungseinrichtung

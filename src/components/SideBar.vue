@@ -20,6 +20,7 @@ import ListItem from './ListItem.vue';
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
 
+
 </script>
 <style>
 .sidenav {
