@@ -13,15 +13,18 @@
 <script lang="ts" setup>
 import PopUp from '@/components/Popup.vue'
 import StatusBox from '@/components/StatusBox.vue'
-import { defineComponent } from 'vue'
 import { useFeatureStore } from '@/stores/featureStore'
 import { useGlobalStore } from '@/stores/globalStore';
 const Features = useFeatureStore()
 const Global = useGlobalStore()
 Global.PopUpType = 'manu'
+
+// Load Features from Store
 if (Features.Features.length < 1) {
     Features.Fill()
 }
+
+// Close Popup on Escape
 window.addEventListener('keydown', (e) => {
     if (e.key == 'Escape') {
         Global.closePopup()

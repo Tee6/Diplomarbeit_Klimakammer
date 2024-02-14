@@ -9,30 +9,28 @@
   </div>
   <sidebar :key="Global.ActionList.length"></sidebar>
   <div class="container">
-    <router-view />
+    <router-view /> <!-- Displays Chosen View -->
   </div>
   <TxtToSpeechButton></TxtToSpeechButton>
 </template>
 
 <script lang="ts" setup>
+
+// Imports Components
 import TxtToSpeechButton from '@/components/TxtToSpeechButton.vue';
 import Navbar from '@/components/NavBar.vue'
 import sidebar from '@/components/SideBar.vue'
+
+// Imports Stores
+import { useReglerStore } from './stores/CtrlLoopStore';
 import { useGlobalStore } from './stores/globalStore';
 const Global = useGlobalStore()
-import { useReglerStore } from './stores/CtrlLoopStore';
-import { useFeatureStore } from './stores/featureStore';
 const ReglerStore = useReglerStore()
 
-ReglerStore.getKammerValues()
+ReglerStore.getKammerValues() // Get initial Sensor Values
 
-Global.PopUpType == 'welcome'
-Global.httpGet(Global.APIStart + Global.APIkey)
-
-
-
-
-
+Global.PopUpType == 'welcome' // Current View Variable to welcome
+Global.httpGet(Global.APIStart + Global.APIkey) // Initialize API Connection to OpenweatherMap
 </script>
 
 <style>

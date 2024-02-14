@@ -16,7 +16,6 @@
                     PSU
                 </div>
                 <div class="content psu">
-                    <span class="statustitle">PSU Status: {{ ReglerStore.CurrentStatus.get('PSUstatus') }}</span>
                     <span class="statustitle">PSU Voltage: {{ ReglerStore.CurrentStatus.get('PSUvolt') }}</span>
                     <span class="statustitle">PSU Current: {{ ReglerStore.CurrentStatus.get('PSUvolt') }}</span>
                 </div>
@@ -26,7 +25,7 @@
                     Tür
                 </div>
                 <div class="content psu">
-                    <span class="statustitle">Tür Status: {{ DoorStatus() }}</span>
+                    <span class="statustitle">Tür Status: {{ DoorStatus() }}</span> <!-- Maybe Töten -->
                 </div>
             </div>
         </div>
@@ -48,6 +47,7 @@ const ReglerStore = useReglerStore()
 
 Global.PopUpType = 'main'
 Features.Fill()
+
 function DoorStatus() {
     if (ReglerStore.CurrentStatus.get('Tuer') > 1) {
         return 'Offen'

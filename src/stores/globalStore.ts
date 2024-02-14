@@ -30,25 +30,25 @@ export const useGlobalStore = defineStore('globalStore', {
         APIkey: 'a7121575dbfca3daa1bf7948f59c14dd' as string,
         APIStart: 'http://api.openweathermap.org/data/2.5/weather?id=524901&appid=' as string,
 
-        weather: '' as any,
-        weatherNOW: '' as any,
-        lon: '' as string,
-        lat: '' as string,
-        cityName: '' as string,
-        countryName: '' as string,
-        PictureLink: '' as string,
-        MapArray: [] as Map<string, number>[],
+        weather: '' as any, // Helpvariable for weatherAPI
+        weatherNOW: '' as any, // Current Weather as JSON
+        lon: '' as string, // Longitude of the current Location
+        lat: '' as string, // Latitude of the current Location
+        cityName: '' as string, // Name of the Fetched City
+        countryName: '' as string, // Name of the Fetched Country
+        PictureLink: '' as string, // Link to the Weather Icon
+        MapArray: [] as Map<string, number>[], // Map of all Features and their Values
 
-        keyList: [] as string[],
-        tempList: [] as number[],
-        humidList: [] as number[],
-        rainList: [] as number[],
-        sunList: [] as number[],
-        showRain: false as boolean,
+        keyList: [] as string[], // List of all Keys for the Graphs
+        tempList: [] as number[], // List of all Temperatures for the Graphs
+        humidList: [] as number[], // List of all Humidities for the Graphs
+        rainList: [] as number[], // List of all Rain for the Graphs
+        sunList: [] as number[], // List of all Sun for the Graphs
+        showRain: false as boolean, // State Variable if Rain is present
         //#endregion API&Weather
     }),
     actions: ({
-        dateBuilder() {
+        dateBuilder() { // Function to get the current Date in a readable Format
             let d = new Date();
             let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -60,30 +60,30 @@ export const useGlobalStore = defineStore('globalStore', {
 
             return `${day} ${date} ${month} ${year}`;
         },
-        TogglePopup() {
+        TogglePopup() { // Toggles visibility of Popup
             this.showPopup = !this.showPopup
         },
-        closePopup() {
+        closePopup() { // Closes Popup
             this.showPopup = false
         },
-        TaskSort() {
+        TaskSort() { // Sorts Actionslist by time
             this.ActionList.sort(function (a, b) {
                 return a.time - b.time;
             });
         },
-        httpGet(theUrl: string) {
+        httpGet(theUrl: string) { // Function to get Data from API
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open("GET", theUrl, false); // false for synchronous request
             xmlHttp.send();
             return xmlHttp.responseText;
         },
-        fetchWeather(City: string) {
-            if (City === '') { City = 'Rankweil' }
+        fetchWeather(City: string) { // Function to fetch Weather from API
+            if (City === '') { City = 'Rankweil' } // Default City: Rankweil
             this.CleanWeather()
-            let APICall = 'http://api.openweathermap.org/geo/1.0/direct?q=' + City + '&limit=5&appid=' + this.APIkey
+            let APICall = 'http://api.openweathermap.org/geo/1.0/direct?q=' + City + '&limit=5&appid=' + this.APIkey // URL to openweathermap API
             this.weather = this.httpGet(APICall)
             this.weather = JSON.parse(this.weather)
-            if (this.weather[0] === undefined || this.weather.cod === '400') {
+            if (this.weather[0] === undefined || this.weather.cod === '400') { // If first Call doesnt work
                 console.log('Place not defined')
                 this.lat = '47.27140726748231'
                 this.lon = '9.631884405803934'
@@ -99,15 +99,16 @@ export const useGlobalStore = defineStore('globalStore', {
             this.weather = JSON.parse(this.weather)
             console.log(this.weather)
             this.weatherNOW = this.weather.current
-            this.extractLists(this.weather.hourly.slice(0, this.samplesize))
-            if (this.weather.current.weather[0] === undefined) {
+            this.extractLists(this.weather.hourly.slice(0, this.samplesize)) // Extracts Data from Weather for Graphs
+
+            if (this.weather.current.weather[0] === undefined) { // If no Weather Icon is present
                 this.PictureLink = 'https://openweathermap.org/img/wn/undefined@2x.png'
             } else {
                 this.PictureLink = 'https://openweathermap.org/img/wn/' + this.weather.current.weather[0].icon + '@2x.png'
             }
             useChartStore().updateCharts()
         },
-        extractLists(objects: any[]) {
+        extractLists(objects: any[]) { // Extracts Data from Weather for Graphs
             this.showRain = false;
             for (const obj of objects) {
                 this.keyList.push(this.unixToTime(obj.dt));
@@ -123,7 +124,7 @@ export const useGlobalStore = defineStore('globalStore', {
 
             }
         },
-        scaleValue(value: number, min: number, max: number) {
+        scaleValue(value: number, min: number, max: number) { // Scales Values to 0-100
             // Stelle sicher, dass der Wert nicht kleiner als der Mindestwert ist
             value = Math.max(value, min);
 
@@ -135,7 +136,7 @@ export const useGlobalStore = defineStore('globalStore', {
 
             return scaledValue;
         },
-        unixToTime(unixtime: number = 0) {
+        unixToTime(unixtime: number = 0) { // Converts Unix Time to readable Time
             // Erstelle ein Date-Objekt mit dem übergebenen Unix-Zeitstempel (in Millisekunden)
             const datum = new Date(unixtime * 1000);
 
@@ -147,7 +148,7 @@ export const useGlobalStore = defineStore('globalStore', {
             // Gib die formatierte Uhrzeit zurück
             return `${stunden}:${minuten}:${sekunden}`;
         },
-        CleanWeather() {
+        CleanWeather() { // Cleans Weather Variables for new Routine
             console.log('CleanWeather')
             this.keyList = []
             this.tempList = []
@@ -155,7 +156,7 @@ export const useGlobalStore = defineStore('globalStore', {
             this.sunList = []
             this.rainList = []
         },
-        WeatherToAction() {
+        WeatherToAction() { // Converts Live Weather to Actions
             this.Changed = "true"
             this.ActionList = []
             let i = 0
@@ -213,13 +214,13 @@ export const useGlobalStore = defineStore('globalStore', {
             this.TaskSort()
             useFeatureStore().UpdateMap(this.ActionList)
         },
-        httpSetValue(theUrl: string, value: string) {
+        httpSetValue(theUrl: string, value: string) { // Function to send Data to API
             var xmlHttpx = new XMLHttpRequest();
             xmlHttpx.open("POST", theUrl, false); // false for synchronous request
             xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
             xmlHttpx.send(value);
         },
-        convertToJSON() {
+        convertToJSON() { // Converts Actions to JSON for API
             // Initialisiere das Ausgabeobjekt mit der gewünschten Struktur
             let outputJSON = {
                 "UpdateID": this.UpdateID,
@@ -246,12 +247,12 @@ export const useGlobalStore = defineStore('globalStore', {
 
             return outputJSON;
         },
-        save() {
+        save() { // Saves Actions to API
             this.Changed = "false"
             this.StartTime = Date.now()
             console.log(this.convertToJSON())
         },
-        timestampZuDatumUhrzeit(unixTimestamp: number) {
+        timestampZuDatumUhrzeit(unixTimestamp: number) { // Converts Unix Time to readable Time for Starttime
             // Erstelle ein Date-Objekt mit dem Unix-Timestamp (in Millisekunden)
             let datumUhrzeit = new Date(unixTimestamp);
 
@@ -274,7 +275,7 @@ export const useGlobalStore = defineStore('globalStore', {
 
             return formatiertesDatumUhrzeit;
         },
-        createTimedAction(Feature: string, time: number, sollvalue: number) {
+        createTimedAction(Feature: string, time: number, sollvalue: number) { // Creates a new Action from TTS
             let action: Action = {
                 id: this.ActionList.length + 1,
                 name: Feature,
