@@ -103,7 +103,6 @@ const StatusBoxData = {
     background-color: #236326;
     text-align: left;
     margin: 20px;
-    padding-bottom: 10px;
 }
 
 

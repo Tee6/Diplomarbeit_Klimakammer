@@ -19,8 +19,6 @@ function removeText() {
     txtactive.value = false
 }
 
-let testString = '{"Command": 2,"Feature": "Sonne","data": [{"value": 50,"Time": 234875842758,"Feature": "Sonne"},{"Feature": "Sonne","value": 50},{"Place": "Rankweil"}]}'
-
 
 
 async function startRecording() {
@@ -37,10 +35,23 @@ async function startRecording() {
 
         mediaRecorder.onstop = () => {
             const recordedBlob = new Blob(recordedChunks, { type: 'audio/mp3' });
-            console.log(recordedBlob)
 
             useReglerStore().sendAudio(recordedBlob);
-            useReglerStore().createActionfromTTS(JSON.parse(testString))
+            let i = 0;
+            let resp = "None";
+            while (resp == "None" && i < 10) {
+                console.log("We are checking")
+                i++;
+                resp = useReglerStore().recieveSTT();
+                resp = JSON.parse(resp)[0]
+            };
+            console.log("No burnouts, No burnouts")
+            try {
+                useReglerStore().createActionfromTTS(JSON.parse(resp));
+            } catch {
+                alert("Kein Befehl erkannt")
+            }
+
 
             recordedChunks = [];
         };

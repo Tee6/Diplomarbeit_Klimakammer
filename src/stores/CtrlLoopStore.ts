@@ -24,7 +24,7 @@ interface TTSJson {
 
 export const useReglerStore = defineStore('ReglerStore', {
     state: () => ({
-        BackEndIP: 'http://13.48.59.20',
+        BackEndIP: 'http://127.0.0.1:8000',
         SunURL: '/sun/intensity',
         RainURL: '/water/flow',
         HumidURL: '/air/humidity',
@@ -32,7 +32,9 @@ export const useReglerStore = defineStore('ReglerStore', {
         DoorURL: '/misc/door',
         PSUstatusURL: '/psu/status',
         PSUvoltURL: '/psu/voltage',
-        TTSURL: '/TTS',
+        set_STTURL: '/STT/set',
+        get_STTURL: '/STT/get',
+
         History: [] as Map<string, any>[],
         CurrentStatus: new Map<string, any>()
     }),
@@ -100,7 +102,7 @@ export const useReglerStore = defineStore('ReglerStore', {
         },
         sendAudio(value: any) {
             var xmlHttpx = new XMLHttpRequest();
-            xmlHttpx.open("POST", this.BackEndIP + this.TTSURL, false); // false for synchronous request
+            xmlHttpx.open("POST", this.BackEndIP + this.set_STTURL, false); // false for synchronous request
             xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
             console.log("Blob sent")
             let form = new FormData();
@@ -110,15 +112,22 @@ export const useReglerStore = defineStore('ReglerStore', {
         createActionfromTTS(inputJson: TTSJson) {
             if (inputJson.Command == 0) {
                 console.log("Setting Timed Feature Value")
-                useGlobalStore().createTimedAction(inputJson.data[0].Feature, inputJson.data[0].Time, inputJson.data[0].value,)
+                useGlobalStore().createTimedAction(inputJson.Feature, inputJson.data[0].Time, inputJson.data[0].value,)
             } else if (inputJson.Command == 1) {
                 console.log("Setting Feature Value")
-                useGlobalStore().createTimedAction(inputJson.data[1].Feature, 0, inputJson.data[1].value)
+                useGlobalStore().createTimedAction(inputJson.Feature, 0, inputJson.data[1].value)
             } else if (inputJson.Command == 2) {
                 console.log("Setting Live Weather")
                 useGlobalStore().fetchWeather(inputJson.data[2].Place)
                 useGlobalStore().WeatherToAction()
             }
         },
+        recieveSTT() {
+            var xmlHttpx = new XMLHttpRequest();
+            xmlHttpx.open("GET", this.BackEndIP + this.get_STTURL, false); // false for synchronous request
+            xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xmlHttpx.send();
+            return xmlHttpx.responseText
+        }
     }
 })
