@@ -30,7 +30,7 @@
             </div>
             <div class="box" style="margin-left: 42px;margin-right: 42px;">
                 <div class="heading misc-boxHeading">
-                    Kamera
+                    <a :href=useReglerStore().CamIP target="_blank" style="all: unset; cursor: pointer;">Kamera</a>
                 </div>
                 <div class="content psu">
                     <CameraStream></CameraStream>

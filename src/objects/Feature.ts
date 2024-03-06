@@ -25,7 +25,8 @@ export interface StatusUpdate {
     Temperatur: string,
     Tuer: string,
     PSUstatus: string,
-    PSUvolt: string
+    PSUvolt: string,
+    Wind: string,
 }
 
 export const Sonne: Feature = {
@@ -60,5 +61,13 @@ export const Luftfeuchtigkeit: Feature = {
     url: '/air/humidity',
 };
 
-export const Feat = [Sonne, Temperatur, Regen, Luftfeuchtigkeit]
+export const Wind: Feature = {
+    id: 3,
+    name: 'Wind',
+    value_name: 'Prozent',
+    iconLink: 'mode_fan',
+    url: '/air/fanspeed',
+};
+
+export const Feat = [Sonne, Temperatur, Regen, Luftfeuchtigkeit, Wind]
 export const ValueHistory: StatusUpdate[] = []

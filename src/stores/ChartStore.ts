@@ -52,6 +52,16 @@ export const useChartStore = defineStore('chart', {
                 }
             ],
         } as any,
+        WindData: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'Wind in %',
+                    data: [],
+                    borderColor: '#FFFFFF'
+                }
+            ],
+        } as any,
         istSunData: {
             labels: [] as any[],
             datasets: [
@@ -92,6 +102,16 @@ export const useChartStore = defineStore('chart', {
                 },
             ],
         },
+        istWindData: {
+            labels: [] as any[],
+            datasets: [
+                {
+                    label: 'istwert',
+                    data: [] as any[],
+                    borderColor: '#FFFFFF'
+                },
+            ],
+        }
     }),
     actions: {
         updateCharts() {
@@ -107,11 +127,15 @@ export const useChartStore = defineStore('chart', {
 
             this.SunData.labels = useGlobalStore().keyList
             this.SunData.datasets[0].data = useGlobalStore().sunList
+
+            this.WindData.labels = useGlobalStore().keyList
+            this.WindData.datasets[0].data = useGlobalStore().windList
             //#endregion sollWerte
         },
         StatusChart(F: Feature) {
             if (F == undefined) return []
             let temp = this.StatusBoxCharts.get(F.name) || []
+
             let tempval = useReglerStore().httpGetValue(useReglerStore().BackEndIP + F.url)
             temp.push(tempval)
 
@@ -134,6 +158,8 @@ export const useChartStore = defineStore('chart', {
                 this.istSunData.datasets[0].data = (this.StatusBoxCharts.get("Sonne") || []).slice(-useGlobalStore().samplesize);
                 this.istTempData.labels = this.istTime
                 this.istTempData.datasets[0].data = (this.StatusBoxCharts.get("Temperatur") || []).slice(-useGlobalStore().samplesize);
+                this.istWindData.labels = this.istTime
+                this.istWindData.datasets[0].data = (this.StatusBoxCharts.get("Wind") || []).slice(-useGlobalStore().samplesize);
             } else {
                 this.istHumidData.labels = this.istTime
                 this.istHumidData.datasets[0].data = this.StatusBoxCharts.get("Luftfeuchtigkeit") || []
@@ -143,6 +169,8 @@ export const useChartStore = defineStore('chart', {
                 this.istSunData.datasets[0].data = this.StatusBoxCharts.get("Sonne") || []
                 this.istTempData.labels = this.istTime
                 this.istTempData.datasets[0].data = this.StatusBoxCharts.get("Temperatur") || []
+                this.istWindData.labels = this.istTime
+                this.istWindData.datasets[0].data = this.StatusBoxCharts.get("Wind") || []
             }
 
             this.check++

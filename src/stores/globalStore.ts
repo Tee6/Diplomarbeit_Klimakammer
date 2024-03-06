@@ -9,7 +9,7 @@ export const useGlobalStore = defineStore('globalStore', {
     state: () => ({
         // Change this to your needs
         samplesize: 20 as number, // 40 max
-        updatefrequency: 15000 as number, // time in milliseconds
+        updatefrequency: 9000 as number, // time in milliseconds
         swift: true as boolean, // swift mode for Graphs
 
         //#region Features
@@ -44,6 +44,7 @@ export const useGlobalStore = defineStore('globalStore', {
         humidList: [] as number[], // List of all Humidities for the Graphs
         rainList: [] as number[], // List of all Rain for the Graphs
         sunList: [] as number[], // List of all Sun for the Graphs
+        windList: [] as number[], // List of all Wind for the Graphs
         showRain: false as boolean, // State Variable if Rain is present
         //#endregion API&Weather
     }),
@@ -75,6 +76,8 @@ export const useGlobalStore = defineStore('globalStore', {
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open("GET", theUrl, false); // false for synchronous request
             xmlHttp.send();
+            console.log(theUrl)
+            console.log(xmlHttp.responseText)
             return xmlHttp.responseText;
         },
         fetchWeather(City: string) { // Function to fetch Weather from API
@@ -155,6 +158,7 @@ export const useGlobalStore = defineStore('globalStore', {
             this.humidList = []
             this.sunList = []
             this.rainList = []
+            this.windList = []
         },
         WeatherToAction() { // Converts Live Weather to Actions
             this.Changed = "true"

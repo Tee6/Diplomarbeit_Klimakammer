@@ -1,28 +1,12 @@
 <template>
     <div class="camerabox">
-        <video>Stream unavailable</video>
-
-        <canvas ref="canvas" style="display: none;" />
+        <img :src=cam />
     </div>
 </template>
 
 <script setup lang="ts">
-
-
-startcapture();
-
-function startcapture() {
-    navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-        const video = document.querySelector('video');
-        if (video === null) {
-            return;
-        }
-        video.srcObject = stream;
-        video.onloadedmetadata = (e) => {
-            video.play();
-        };
-    });
-}
+import { useReglerStore } from '@/stores/CtrlLoopStore';
+let cam = useReglerStore().CamIP
 </script>
 
 <style scoped>
@@ -32,19 +16,20 @@ function startcapture() {
     align-items: center;
 
     height: 270px;
+    width: auto;
 }
 
-video {
+img {
+    width: 100%;
     border-radius: 9px;
-    width: 90%;
     height: auto;
 }
 
-video:hover {
+.testbig {
     width: 70%;
     height: auto;
     position: absolute;
-    top: 7.5%;
-    left: 1%;
+    top: 5%;
+    left: 0%;
 }
 </style>
