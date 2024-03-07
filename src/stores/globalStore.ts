@@ -4,6 +4,7 @@ import { Feature } from "@/objects/Feature";
 import { Feat } from "@/objects/Feature";
 import { Action } from "@/objects/Feature"
 import { useChartStore } from "./ChartStore";
+import { useReglerStore } from "./CtrlLoopStore";
 
 export const useGlobalStore = defineStore('globalStore', {
     state: () => ({
@@ -224,6 +225,12 @@ export const useGlobalStore = defineStore('globalStore', {
             xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
             xmlHttpx.send(value);
         },
+        sendRoutine(theUrl: string, value: string) { // Function to send Data to API
+            var xmlHttpx = new XMLHttpRequest();
+            xmlHttpx.open("PUT", theUrl, false); // false for synchronous request
+            xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xmlHttpx.send(value);
+        },
         convertToJSON() { // Converts Actions to JSON for API
             // Initialisiere das Ausgabeobjekt mit der gewünschten Struktur
             let outputJSON = {
@@ -254,7 +261,9 @@ export const useGlobalStore = defineStore('globalStore', {
         save() { // Saves Actions to API
             this.Changed = "false"
             this.StartTime = Date.now()
-            console.log(this.convertToJSON())
+            let savepoint = this.convertToJSON()
+            console.log(savepoint)
+            this.sendRoutine(useReglerStore().BackEndIP + useReglerStore().setRoutine, JSON.stringify(savepoint))
         },
         timestampZuDatumUhrzeit(unixTimestamp: number) { // Converts Unix Time to readable Time for Starttime
             // Erstelle ein Date-Objekt mit dem Unix-Timestamp (in Millisekunden)

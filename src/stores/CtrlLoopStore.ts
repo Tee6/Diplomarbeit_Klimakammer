@@ -37,6 +37,7 @@ export const useReglerStore = defineStore('ReglerStore', {
         PSUvoltURL: '/psu/voltage',
         set_STTURL: '/transcribe',
         get_STTURL: '/STT/get',
+        setRoutine: '/setValue',
 
         History: [] as Map<string, any>[],
         CurrentStatus: new Map<string, any>()
