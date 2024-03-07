@@ -28,6 +28,8 @@
 
                 <LineChart v-if="Global.PopUpType == 'main' && pr.F?.name == 'Luftfeuchtigkeit'"
                     style="width: 300px; margin-right: 20px;" :chart-data="useChartStore().istHumidData"></LineChart>
+                <LineChart v-if="Global.PopUpType == 'main' && pr.F?.name == 'Wind'"
+                    style="width: 300px; margin-right: 20px;" :chart-data="useChartStore().istWindData"></LineChart>
             </div>
 
             <div class="content" v-if="Global.ActionID == undefined">
@@ -103,7 +105,6 @@ const StatusBoxData = {
     background-color: #236326;
     text-align: left;
     margin: 20px;
-    padding-bottom: 10px;
 }
 
 

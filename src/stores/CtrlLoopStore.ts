@@ -24,15 +24,21 @@ interface TTSJson {
 
 export const useReglerStore = defineStore('ReglerStore', {
     state: () => ({
-        BackEndIP: 'http://13.48.59.20',
+        SSTIP: '13.60.27.65',
+        CamIP: 'http://192.168.0.203:8081',
+        BackEndIP: 'http://127.0.0.1:8000',
         SunURL: '/sun/intensity',
         RainURL: '/water/flow',
         HumidURL: '/air/humidity',
         TempURL: '/air/temperature',
+        WindURL: '/air/fanspeed',
         DoorURL: '/misc/door',
         PSUstatusURL: '/psu/status',
         PSUvoltURL: '/psu/voltage',
-        TTSURL: '/TTS',
+        set_STTURL: '/transcribe',
+        get_STTURL: '/STT/get',
+        setRoutine: '/setValue',
+
         History: [] as Map<string, any>[],
         CurrentStatus: new Map<string, any>()
     }),
@@ -47,7 +53,8 @@ export const useReglerStore = defineStore('ReglerStore', {
                 Temperatur: this.httpGetValue(this.BackEndIP + this.TempURL),
                 Tuer: this.httpGetValue(this.BackEndIP + this.DoorURL),
                 PSUstatus: this.httpGetValue(this.BackEndIP + this.PSUstatusURL),
-                PSUvolt: this.httpGetValue(this.BackEndIP + this.PSUvoltURL)
+                PSUvolt: this.httpGetValue(this.BackEndIP + this.PSUvoltURL),
+                Wind: this.httpGetValue(this.BackEndIP + this.WindURL),
             }
             this.CurrentStatus.set('Time', kammerValues.Time)
             this.CurrentStatus.set('Sonne', kammerValues.Sonne)
@@ -57,6 +64,7 @@ export const useReglerStore = defineStore('ReglerStore', {
             this.CurrentStatus.set('Tuer', kammerValues.Tuer)
             this.CurrentStatus.set('PSUstatus', kammerValues.PSUstatus)
             this.CurrentStatus.set('PSUvolt', kammerValues.PSUvolt)
+            this.CurrentStatus.set('Wind', kammerValues.Wind)
             this.History.push(this.CurrentStatus)
 
         },
@@ -100,7 +108,7 @@ export const useReglerStore = defineStore('ReglerStore', {
         },
         sendAudio(value: any) {
             var xmlHttpx = new XMLHttpRequest();
-            xmlHttpx.open("POST", this.BackEndIP + this.TTSURL, false); // false for synchronous request
+            xmlHttpx.open("POST", this.SSTIP + this.set_STTURL, false); // false for synchronous request
             xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
             console.log("Blob sent")
             let form = new FormData();
@@ -110,15 +118,22 @@ export const useReglerStore = defineStore('ReglerStore', {
         createActionfromTTS(inputJson: TTSJson) {
             if (inputJson.Command == 0) {
                 console.log("Setting Timed Feature Value")
-                useGlobalStore().createTimedAction(inputJson.data[0].Feature, inputJson.data[0].Time, inputJson.data[0].value,)
+                useGlobalStore().createTimedAction(inputJson.Feature, inputJson.data[0].Time, inputJson.data[0].value,)
             } else if (inputJson.Command == 1) {
                 console.log("Setting Feature Value")
-                useGlobalStore().createTimedAction(inputJson.data[1].Feature, 0, inputJson.data[1].value)
+                useGlobalStore().createTimedAction(inputJson.Feature, 0, inputJson.data[1].value)
             } else if (inputJson.Command == 2) {
                 console.log("Setting Live Weather")
                 useGlobalStore().fetchWeather(inputJson.data[2].Place)
                 useGlobalStore().WeatherToAction()
             }
         },
+        recieveSTT() {
+            var xmlHttpx = new XMLHttpRequest();
+            xmlHttpx.open("GET", this.BackEndIP + this.get_STTURL, false); // false for synchronous request
+            xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xmlHttpx.send();
+            return xmlHttpx.responseText
+        }
     }
 })

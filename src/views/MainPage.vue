@@ -28,6 +28,14 @@
                     <span class="statustitle">Tür Status: {{ DoorStatus() }}</span> <!-- Maybe Töten -->
                 </div>
             </div>
+            <div class="box" style="margin-left: 42px;margin-right: 42px;">
+                <div class="heading misc-boxHeading">
+                    <a :href=useReglerStore().CamIP target="_blank" style="all: unset; cursor: pointer;">Kamera</a>
+                </div>
+                <div class="content psu">
+                    <CameraStream></CameraStream>
+                </div>
+            </div>
         </div>
     </div>
     <PopUp :action-name="Global.activePopup" v-if="Global.showPopup">
@@ -38,6 +46,7 @@
 import PopUp from '@/components/Popup.vue'
 import { useChartStore } from '@/stores/ChartStore';
 import StatusBox from '@/components/StatusBox.vue'
+import CameraStream from '@/components/CameraStream.vue';
 import { useGlobalStore } from '@/stores/globalStore';
 const Global = useGlobalStore()
 import { useFeatureStore } from '@/stores/featureStore';
