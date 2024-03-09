@@ -1,4 +1,3 @@
-
 <template>
     <div class="popup">
         <link rel="stylesheet"
@@ -9,7 +8,7 @@
                 {{ l.iconLink }}
             </span>
             <span style=" text-decoration: solid; text-decoration-line: underline;"> {{
-                Global.activePopup }}</span>
+                    Global.activePopup }}</span>
             <form>
                 <label> {{ l.value_name + ' ' }} </label>
                 <input type="number" placeholder="%" v-model="FormValue1" />
@@ -26,7 +25,8 @@
             <button class="button-23 close-btn" role="button" @click="Global.TogglePopup()">
                 &times;
             </button>
-            <button v-show="Global.Edittype == 'edit'" class="button-23 confirm-btn" role="button" @click="Confirm(true)">
+            <button v-show="Global.Edittype == 'edit'" class="button-23 confirm-btn" role="button"
+                @click="Confirm(true)">
                 Löschen
             </button>
         </div>

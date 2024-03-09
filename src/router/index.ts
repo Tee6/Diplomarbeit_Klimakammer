@@ -3,6 +3,7 @@ import auto from '@/views/AutoPage.vue'
 import manu from '@/views/ManuPage.vue'
 import Home from '@/views/MainPage.vue'
 import liveweather from '@/views/LiveWeatherPage.vue'
+import settings from '@/views/SettingsPage.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -28,6 +29,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/liveweather',
     name: 'liveweather',
     component: liveweather
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: settings
   }
 ]
 

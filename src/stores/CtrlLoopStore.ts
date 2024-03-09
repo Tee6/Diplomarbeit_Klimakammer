@@ -24,14 +24,15 @@ interface TTSJson {
 
 export const useReglerStore = defineStore('ReglerStore', {
     state: () => ({
-        SSTIP: '13.60.27.65',
-        CamIP: 'http://192.168.0.203:8081',
+        SSTIP: 'http://16.170.205.234:80',
+        CamIP: 'http://192.168.205.252:8081/0/stream',
+        //BackEndIP: 'http://192.168.205.252',
         BackEndIP: 'http://127.0.0.1:8000',
         SunURL: '/sun/intensity',
         RainURL: '/water/flow',
         HumidURL: '/air/humidity',
         TempURL: '/air/temperature',
-        WindURL: '/air/fanspeed',
+        WindURL: '/fan/fanspeed',
         DoorURL: '/misc/door',
         PSUstatusURL: '/psu/status',
         PSUvoltURL: '/psu/voltage',

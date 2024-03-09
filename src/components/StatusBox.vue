@@ -11,7 +11,7 @@
             </div>
             <div class="content" v-if="Global.ActionID != undefined">
                 <div style="margin-right: 10px; height: 50px;">
-                    Derzeitige Intensität: {{ currentValue }}%
+                    Derzeitige Intensität: {{ useReglerStore().CurrentStatus.get(pr.F?.name ?? '') }}%
                     <br>
                     Erwartete Intensität: {{ Action?.sollvalue }}%
                 </div>
@@ -69,11 +69,13 @@ const pr = defineProps<{ F?: Feature }>()
 
 let currentMap = useReglerStore().CurrentStatus
 
-let currentValue = currentMap.get(pr.F?.name ?? '')
+let currentValue = ref(currentMap.get(pr.F?.name ?? ''))
 let ist: any[] = []
 async function fetchDataAndPushToArray(url: string): Promise<void> {
     setInterval(async () => {
         ChartStore.StatusChart(pr.F || Feat[0]);
+        currentValue = currentMap.get(pr.F?.name ?? '')
+        console.log(useReglerStore().CurrentStatus)
     }, Global.updatefrequency);
 }
 fetchDataAndPushToArray(pr.F?.url ?? '')
@@ -81,6 +83,7 @@ let x = useFeatureStore().CreateXaxis(useFeatureStore().Featuremap)
 let Labels = x.get(pr.F?.name || '') ?? [0]
 let y = useFeatureStore().CreateYaxis(useFeatureStore().Featuremap)
 let LineData = y.get(pr.F?.name || '') ?? [0]
+
 const StatusBoxData = {
     labels: Labels,
     datasets: [

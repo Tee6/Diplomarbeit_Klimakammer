@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { useGlobalStore } from '@/stores/globalStore';
 import { useFeatureStore } from '@/stores/featureStore';
 import { useReglerStore } from '@/stores/CtrlLoopStore';
-import { Feature } from '@/objects/Feature';
+import { Feat, Feature } from '@/objects/Feature';
 import { counter } from '@fortawesome/fontawesome-svg-core';
 
 export const useChartStore = defineStore('chart', {
@@ -137,9 +137,11 @@ export const useChartStore = defineStore('chart', {
             let temp = this.StatusBoxCharts.get(F.name) || []
 
             let tempval = useReglerStore().httpGetValue(useReglerStore().BackEndIP + F.url)
+            useReglerStore().CurrentStatus.set(F.name, tempval)
             temp.push(tempval)
 
-            if (this.counter % 4 === 0) {
+
+            if (this.counter % Feat.length === 0) {
                 this.istTime.push(this.getCurrentTime())
                 this.entireistTime.push(this.getCurrentTime())
                 if (this.istTime.length > useGlobalStore().samplesize && useGlobalStore().swift) {

@@ -1,4 +1,6 @@
 <template>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <nav>
         <router-link class="navlink button-28 title" to="/main">Klimakammer</router-link>
         <router-link :class="{ activeTab: Global.PopUpType == 'auto' }" class="navlink button-28" role="button"
@@ -8,6 +10,11 @@
             to="/manu">Manuell</router-link>
         <router-link :class="{ activeTab: Global.PopUpType == 'liveweather' }" class="navlink button-28" role="button"
             to="/liveweather">LIVE Wetter</router-link>
+        <router-link :class="{ activeTab: Global.PopUpType == 'settings' }"
+            class="navlink button-28 material-symbols-outlined" role="button" style="padding-top:18px" to="/settings">
+            settings
+        </router-link>
+
     </nav>
 </template>
 <script lang="ts" setup>
@@ -15,6 +22,10 @@ import { useGlobalStore } from '@/stores/globalStore'
 const Global = useGlobalStore()
 </script>
 <style>
+.material-symbols-outlined {
+    align-items: center;
+}
+
 router-view {
     z-index: 3;
 }
