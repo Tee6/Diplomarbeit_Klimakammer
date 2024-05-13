@@ -35,6 +35,7 @@
         <LineChart v-if="Global.showRain" style="width: 30%" :chart-data="ChartStore.RainData" :key="Global.cityName">
         </LineChart>
         <LineChart style="width: 30%" :chart-data="ChartStore.HumidData" :key="Global.cityName"></LineChart>
+        <LineChart style="width: 30%" :chart-data="ChartStore.WindData" :key="Global.cityName"></LineChart>
         <button class="actionBtn button-29" role="button" @click="Global.WeatherToAction()">Apply</button>
     </div>
 </template>

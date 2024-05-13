@@ -2,6 +2,8 @@
     <div class="mainheading">
         <h1>Klimakammer Übersicht</h1>
         <p v-if="Global.StartTime > 0">Starttime: {{ Global.timestampZuDatumUhrzeit(Global.StartTime) }}</p>
+        <button @click="deleteRoutine" class="button-29" style="font-size: 13px; height: 25px;"> Routine
+            Löschen</button>
     </div>
     <div class="overview">
         <div>
@@ -63,6 +65,10 @@ function DoorStatus() {
     }
 }
 
+function deleteRoutine() {
+    Global.ActionList = []
+    Global.save()
+}
 </script>
 
 <style>

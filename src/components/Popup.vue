@@ -20,7 +20,7 @@
             </form>
             <br>
             <button class="button-23 confirm-btn" role="button" @click="Confirm()">
-                Confirm
+                Fertig
             </button>
             <button class="button-23 close-btn" role="button" @click="Global.TogglePopup()">
                 &times;

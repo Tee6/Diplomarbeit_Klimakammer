@@ -36,21 +36,11 @@ async function startRecording() {
         mediaRecorder.onstop = () => {
             const recordedBlob = new Blob(recordedChunks, { type: 'audio/mp3' });
 
-            useReglerStore().sendAudio(recordedBlob);
-            let i = 0;
-            let resp = "None";
-            while (resp == "None" && i < 10) {
-                console.log("We are checking")
-                i++;
-                resp = useReglerStore().recieveSTT();
-                resp = JSON.parse(resp)[0]
-            };
-            console.log("No burnouts, No burnouts")
-            try {
-                useReglerStore().createActionfromTTS(JSON.parse(resp));
-            } catch {
-                alert("Kein Befehl erkannt")
-            }
+            let resp = useReglerStore().sendandrecieveAudio(recordedBlob);
+            let test = JSON.parse(resp)
+            console.log(JSON.parse(test));
+            useReglerStore().createActionfromTTS(JSON.parse(test));
+
 
 
             recordedChunks = [];

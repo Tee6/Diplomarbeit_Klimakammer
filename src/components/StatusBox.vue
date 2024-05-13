@@ -11,7 +11,8 @@
             </div>
             <div class="content" v-if="Global.ActionID != undefined">
                 <div style="margin-right: 10px; height: 50px;">
-                    Derzeitige Intensität: {{ useReglerStore().CurrentStatus.get(pr.F?.name ?? '') }}%
+                    Derzeitige Intensität: {{ useReglerStore().CurrentStatus
+                        .get(pr.F?.name ?? '') }}%
                     <br>
                     Erwartete Intensität: {{ Action?.sollvalue }}%
                 </div>
@@ -23,8 +24,10 @@
                 <LineChart v-if="Global.PopUpType == 'main' && pr.F?.name == 'Temperatur'"
                     style="width: 300px; margin-right: 20px;" :chart-data="useChartStore().istTempData"></LineChart>
 
-                <LineChart v-if="Global.PopUpType == 'main' && pr.F?.name == 'Regen'"
+                <!-- 
+<LineChart v-if="Global.PopUpType == 'main' && pr.F?.name == 'Regen'"
                     style="width: 300px; margin-right: 20px;" :chart-data="useChartStore().istRainData"></LineChart>
+                -->
 
                 <LineChart v-if="Global.PopUpType == 'main' && pr.F?.name == 'Luftfeuchtigkeit'"
                     style="width: 300px; margin-right: 20px;" :chart-data="useChartStore().istHumidData"></LineChart>
@@ -74,8 +77,10 @@ let ist: any[] = []
 async function fetchDataAndPushToArray(url: string): Promise<void> {
     setInterval(async () => {
         ChartStore.StatusChart(pr.F || Feat[0]);
+        if (pr.F?.name == 'Wind') {
+            console.log('Wind')
+        }
         currentValue = currentMap.get(pr.F?.name ?? '')
-        console.log(useReglerStore().CurrentStatus)
     }, Global.updatefrequency);
 }
 fetchDataAndPushToArray(pr.F?.url ?? '')

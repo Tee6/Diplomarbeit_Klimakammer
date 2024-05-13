@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { StatusUpdate } from '@/objects/Feature'
 import { useGlobalStore } from './globalStore'
 import { useFeatureStore } from './featureStore'
+import { h } from 'vue'
 
 interface TTSJson {
     "Command": number,
@@ -9,11 +10,9 @@ interface TTSJson {
     "data": [
         {
             "value": number,
-            "Time": number,
-            "Feature": string
+            "Time": number
         },
         {
-            "Feature": string,
             "value": number
         },
         {
@@ -24,32 +23,36 @@ interface TTSJson {
 
 export const useReglerStore = defineStore('ReglerStore', {
     state: () => ({
-        SSTIP: 'http://16.170.205.234:80',
-        CamIP: 'http://192.168.205.252:8081/0/stream',
-        //BackEndIP: 'http://192.168.205.252',
-        BackEndIP: 'http://127.0.0.1:8000',
+        SSTIP: 'http://16.171.30.95', // AWS
+        //SSTIP: 'http://127.0.0.1:8000', // Localhost
+        CamIP: 'http://10.161.250.255:8081/0/stream',
+        BackEndIP: 'http://13.48.59.20', // AWS
+        //BackEndIP: 'http://10.161.250.255', // Raspberry Pi
+        //BackEndIP: 'http://127.0.0.1:8000', // Localhost
         SunURL: '/sun/intensity',
         RainURL: '/water/flow',
         HumidURL: '/air/humidity',
         TempURL: '/air/temperature',
-        WindURL: '/fan/fanspeed',
+        WindURL: '/air/fanspeed',
         DoorURL: '/misc/door',
         PSUstatusURL: '/psu/status',
         PSUvoltURL: '/psu/voltage',
         set_STTURL: '/transcribe',
         get_STTURL: '/STT/get',
         setRoutine: '/setValue',
+        //getRoutineUrL: '/getRoutine',
 
         History: [] as Map<string, any>[],
         CurrentStatus: new Map<string, any>()
     }),
     actions: {
         getKammerValues() {
+            //useGlobalStore().loadRoutine(useGlobalStore().httpGet(this.BackEndIP + this.getRoutineUrL))
             this.CurrentStatus.clear()
             const kammerValues: StatusUpdate = {
                 Time: Date.now(),
                 Sonne: this.httpGetValue(this.BackEndIP + this.SunURL),
-                Regen: this.httpGetValue(this.BackEndIP + this.RainURL),
+                //Regen: this.httpGetValue(this.BackEndIP + this.RainURL),
                 Luftfeuchtigkeit: this.httpGetValue(this.BackEndIP + this.HumidURL),
                 Temperatur: this.httpGetValue(this.BackEndIP + this.TempURL),
                 Tuer: this.httpGetValue(this.BackEndIP + this.DoorURL),
@@ -59,7 +62,7 @@ export const useReglerStore = defineStore('ReglerStore', {
             }
             this.CurrentStatus.set('Time', kammerValues.Time)
             this.CurrentStatus.set('Sonne', kammerValues.Sonne)
-            this.CurrentStatus.set('Regen', kammerValues.Regen)
+            //this.CurrentStatus.set('Regen', kammerValues.Regen)
             this.CurrentStatus.set('Luftfeuchtigkeit', kammerValues.Luftfeuchtigkeit)
             this.CurrentStatus.set('Temperatur', kammerValues.Temperatur)
             this.CurrentStatus.set('Tuer', kammerValues.Tuer)
@@ -105,36 +108,34 @@ export const useReglerStore = defineStore('ReglerStore', {
                     propertyDataMap.get(key).push(value);
                 }
             }
-            console.log(propertyDataMap.get('Sonne'))
         },
-        sendAudio(value: any) {
+        sendandrecieveAudio(value: any) {
             var xmlHttpx = new XMLHttpRequest();
             xmlHttpx.open("POST", this.SSTIP + this.set_STTURL, false); // false for synchronous request
             xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
-            console.log("Blob sent")
             let form = new FormData();
             form.append("file", value, "aufnahme.mp3");
             xmlHttpx.send(form);
+            return xmlHttpx.responseText
         },
         createActionfromTTS(inputJson: TTSJson) {
+            let upperLetter = inputJson.Feature.charAt(0).toUpperCase() + inputJson.Feature.slice(1);
+            if (upperLetter == "None" && inputJson.Command != 2) {
+                alert("Kein Befehl erkannt. Bitte versuchen Sie es erneut.")
+                return
+            }
             if (inputJson.Command == 0) {
                 console.log("Setting Timed Feature Value")
-                useGlobalStore().createTimedAction(inputJson.Feature, inputJson.data[0].Time, inputJson.data[0].value,)
+                useGlobalStore().createTimedAction(upperLetter, inputJson.data[0].Time, inputJson.data[0].value,)
             } else if (inputJson.Command == 1) {
                 console.log("Setting Feature Value")
-                useGlobalStore().createTimedAction(inputJson.Feature, 0, inputJson.data[1].value)
+                useGlobalStore().createTimedAction(upperLetter, 0, inputJson.data[1].value)
             } else if (inputJson.Command == 2) {
                 console.log("Setting Live Weather")
+                console.log(inputJson.data[2].Place)
                 useGlobalStore().fetchWeather(inputJson.data[2].Place)
                 useGlobalStore().WeatherToAction()
             }
         },
-        recieveSTT() {
-            var xmlHttpx = new XMLHttpRequest();
-            xmlHttpx.open("GET", this.BackEndIP + this.get_STTURL, false); // false for synchronous request
-            xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
-            xmlHttpx.send();
-            return xmlHttpx.responseText
-        }
     }
 })

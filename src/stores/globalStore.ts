@@ -85,6 +85,7 @@ export const useGlobalStore = defineStore('globalStore', {
             let APICall = 'http://api.openweathermap.org/geo/1.0/direct?q=' + City + '&limit=5&appid=' + this.APIkey // URL to openweathermap API
             this.weather = this.httpGet(APICall)
             this.weather = JSON.parse(this.weather)
+
             if (this.weather[0] === undefined || this.weather.cod === '400') { // If first Call doesnt work
                 console.log('Place not defined')
                 this.lat = '47.27140726748231'
@@ -117,6 +118,7 @@ export const useGlobalStore = defineStore('globalStore', {
                 this.tempList.push(obj.temp);
                 this.humidList.push(obj.humidity);
                 this.sunList.push(this.scaleValue(obj.uvi, 0, 11));
+                this.windList.push(obj.wind_speed);
                 if (obj.rain) {
                     this.rainList.push(obj.rain['1h']);
                     this.showRain = true;
@@ -212,6 +214,15 @@ export const useGlobalStore = defineStore('globalStore', {
                 }
                 if (laststate[3] !== a.temp) { this.ActionList.push(TempAction); laststate[3] = a.temp }
                 //#endregion Temperatur
+
+                const WindAction: Action = {
+                    id: this.ActionList.length + 1,
+                    name: 'Wind',
+                    sollvalue: a.wind_speed,
+                    time: i * 3600,
+                    timeString: this.unixToTime(i * 3600),
+                }
+                if (laststate[4] !== a.wind_speed) { this.ActionList.push(WindAction); laststate[4] = a.wind_speed }
                 i++;
             }
             this.TaskSort()
@@ -223,7 +234,7 @@ export const useGlobalStore = defineStore('globalStore', {
             xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
             xmlHttpx.send(value);
         },
-        sendRoutine(theUrl: string, value: string) { // Function to send Data to API
+        sendRoutine(theUrl: string, value: any) { // Function to send Data to API
             var xmlHttpx = new XMLHttpRequest();
             xmlHttpx.open("PUT", theUrl, false); // false for synchronous request
             xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
@@ -260,7 +271,7 @@ export const useGlobalStore = defineStore('globalStore', {
             this.Changed = "false"
             this.StartTime = Date.now()
             let savepoint = this.convertToJSON()
-            console.log(savepoint)
+            console.log(JSON.stringify(savepoint))
             this.sendRoutine(useReglerStore().BackEndIP + useReglerStore().setRoutine, JSON.stringify(savepoint))
         },
         timestampZuDatumUhrzeit(unixTimestamp: number) { // Converts Unix Time to readable Time for Starttime
@@ -297,6 +308,28 @@ export const useGlobalStore = defineStore('globalStore', {
             this.ActionList.push(action)
             this.TaskSort()
             useFeatureStore().UpdateMap(this.ActionList)
+        },
+        loadRoutine(text: string) {
+            try {
+                let data = JSON.parse(text);
+                data = JSON.parse(data.text);
+                console.log(data)
+                const features = data.Features;
+
+                for (const feature in features) {
+                    features[feature].forEach((item: any) => {
+                        this.ActionList.push({
+                            id: item.id,
+                            name: item.name,
+                            sollvalue: item.sollvalue,
+                            time: item.time,
+                            timeString: item.timeString
+                        });
+                    });
+                }
+            } catch (error) {
+                console.log("Keine gespeicherte Routine");
+            }
         }
     })
 })

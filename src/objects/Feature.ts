@@ -20,7 +20,7 @@ export interface Action {
 export interface StatusUpdate {
     Time: number,
     Sonne: string,
-    Regen: string,
+    //Regen: string,
     Luftfeuchtigkeit: string,
     Temperatur: string,
     Tuer: string,
