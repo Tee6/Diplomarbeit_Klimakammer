@@ -12,24 +12,6 @@
         </div>
         <div>
 
-
-            <div class="box" style="margin-left: 42px;margin-right: 42px; height: 100px;">
-                <div class="heading misc-boxHeading">
-                    PSU
-                </div>
-                <div class="content psu">
-                    <span class="statustitle">PSU Voltage: {{ ReglerStore.CurrentStatus.get('PSUvolt') }}</span>
-                    <span class="statustitle">PSU Current: {{ ReglerStore.CurrentStatus.get('PSUvolt') }}</span>
-                </div>
-            </div>
-            <div class="box" style="margin-left: 42px;margin-right: 42px; height: 100px;">
-                <div class="heading misc-boxHeading">
-                    Tür
-                </div>
-                <div class="content psu">
-                    <span class="statustitle">Tür Status: {{ DoorStatus() }}</span> <!-- Maybe Töten -->
-                </div>
-            </div>
             <div class="box" style="margin-left: 42px;margin-right: 42px;">
                 <div class="heading misc-boxHeading">
                     <a :href=useReglerStore().CamIP target="_blank" style="all: unset; cursor: pointer;">Kamera</a>
