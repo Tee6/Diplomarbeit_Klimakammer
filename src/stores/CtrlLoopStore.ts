@@ -25,7 +25,7 @@ export const useReglerStore = defineStore('ReglerStore', {
     state: () => ({
         SSTIP: 'http://16.171.30.95', // AWS
         //SSTIP: 'http://127.0.0.1:8000', // Localhost
-        CamIP: 'http://10.161.250.255:8081/0/stream',
+        CamIP: 'http://192.168.180.195:8081/0/stream',
         //BackEndIP: 'http://13.48.59.20', // AWS
         //BackEndIP: 'http://10.161.250.255', // Raspberry Pi
         //BackEndIP: 'http://127.0.0.1:8000', // Localhost

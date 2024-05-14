@@ -77,9 +77,6 @@ let ist: any[] = []
 async function fetchDataAndPushToArray(url: string): Promise<void> {
     setInterval(async () => {
         ChartStore.StatusChart(pr.F || Feat[0]);
-        if (pr.F?.name == 'Wind') {
-            console.log('Wind')
-        }
         currentValue = currentMap.get(pr.F?.name ?? '')
     }, Global.updatefrequency);
 }

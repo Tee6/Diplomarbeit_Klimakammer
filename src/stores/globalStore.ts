@@ -244,24 +244,25 @@ export const useGlobalStore = defineStore('globalStore', {
             // Initialisiere das Ausgabeobjekt mit der gewünschten Struktur
             let outputJSON = {
                 "UpdateID": this.UpdateID,
-                "Features": {} as Record<string, Action[]>
+                "Sonne": [] as any[],
+                "Regen": [] as any[],
+                "Wind": [] as any[],
             };
             this.UpdateID++
 
             // Iteriere über jedes Objekt in der Eingabeliste
             this.ActionList.forEach(item => {
-                // Überprüfe, ob das Feature bereits im Ausgabeobjekt existiert
-                if (!outputJSON.Features.hasOwnProperty(item.name)) {
-                    outputJSON.Features[item.name] = [];
-                }
-
-                // Füge das neue Objekt mit den entsprechenden Werten hinzu
-                outputJSON.Features[item.name].push({
-                    "id": item.id,
-                    "name": item.name,
-                    "sollvalue": item.sollvalue,
-                    "time": item.time,
-                    "timeString": item.timeString
+                if (item.name === 'Sonne') outputJSON.Sonne.push({
+                    "intensity": item.sollvalue,
+                    "time": item.time
+                });
+                if (item.name === 'Regen') outputJSON.Regen.push({
+                    "intensity": item.sollvalue,
+                    "time": item.time
+                });
+                if (item.name === 'Wind') outputJSON.Wind.push({
+                    "intensity": item.sollvalue,
+                    "time": item.time
                 });
             });
 
@@ -272,6 +273,7 @@ export const useGlobalStore = defineStore('globalStore', {
             this.StartTime = Date.now()
             let savepoint = this.convertToJSON()
             console.log(JSON.stringify(savepoint))
+            console.log(savepoint)
             this.sendRoutine(useReglerStore().BackEndIP + useReglerStore().setRoutine, JSON.stringify(savepoint))
         },
         timestampZuDatumUhrzeit(unixTimestamp: number) { // Converts Unix Time to readable Time for Starttime
