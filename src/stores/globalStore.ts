@@ -258,11 +258,11 @@ export const useGlobalStore = defineStore('globalStore', {
                     "time": item.time
                 });
                 if (item.name === 'Regen') outputJSON.Regen.push({
-                    "intensity": item.sollvalue,
+                    "intensity": Math.floor(item.sollvalue * 2.55),
                     "time": item.time
                 });
                 if (item.name === 'Wind') outputJSON.Wind.push({
-                    "intensity": item.sollvalue,
+                    "intensity": Math.floor(item.sollvalue * 2.55),
                     "time": item.time
                 });
             });
