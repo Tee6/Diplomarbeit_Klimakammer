@@ -34,7 +34,7 @@ export const Sonne: Feature = {
     name: 'Sonne',
     value_name: 'Intensität',
     iconLink: 'sunny',
-    url: '/sun/intensity',
+    url: '/sun/brightness'
 };
 
 export const Temperatur: Feature = {
@@ -50,7 +50,7 @@ export const Regen: Feature = {
     name: 'Regen',
     value_name: 'Intensität',
     iconLink: 'rainy',
-    url: '/water/flow',
+    url: '/sun/uvbrightness',
 };
 
 export const Luftfeuchtigkeit: Feature = {
@@ -66,7 +66,7 @@ export const Wind: Feature = {
     name: 'Wind',
     value_name: 'Prozent',
     iconLink: 'mode_fan',
-    url: '/air/fanspeed',
+    url: '/fan/fanspeed',
 };
 
 export const Feat = [Sonne, Temperatur, Regen, Luftfeuchtigkeit, Wind]

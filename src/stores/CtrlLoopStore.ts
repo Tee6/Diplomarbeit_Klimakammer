@@ -30,11 +30,11 @@ export const useReglerStore = defineStore('ReglerStore', {
         //BackEndIP: 'http://10.161.250.255', // Raspberry Pi
         //BackEndIP: 'http://127.0.0.1:8000', // Localhost
         BackEndIP: 'http://192.168.180.195', // Localhost
-        SunURL: '/sun/intensity',
-        RainURL: '/water/flow',
+        SunURL: '/sun/brightness',
+        //RainURL: '/water/flow',
         HumidURL: '/air/humidity',
         TempURL: '/air/temperature',
-        WindURL: '/air/fanspeed',
+        WindURL: '/fan/fanspeed',
         PSUstatusURL: '/psu/status',
         PSUvoltURL: '/psu/voltage',
         set_STTURL: '/transcribe',
