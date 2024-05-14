@@ -237,6 +237,7 @@ export const useGlobalStore = defineStore('globalStore', {
         sendRoutine(theUrl: string, value: any) { // Function to send Data to API
             var xmlHttpx = new XMLHttpRequest();
             xmlHttpx.open("PUT", theUrl, false); // false for synchronous request
+            xmlHttpx.setRequestHeader('Content-Type', 'application/json');
             xmlHttpx.setRequestHeader('Access-Control-Allow-Origin', '*');
             xmlHttpx.send(value);
         },
@@ -272,9 +273,9 @@ export const useGlobalStore = defineStore('globalStore', {
             this.Changed = "false"
             this.StartTime = Date.now()
             let savepoint = this.convertToJSON()
-            console.log(JSON.stringify(savepoint))
-            console.log(savepoint)
-            this.sendRoutine(useReglerStore().BackEndIP + useReglerStore().setRoutine, JSON.stringify(savepoint))
+            let t = JSON.stringify(savepoint)
+            console.log(t)
+            this.sendRoutine(useReglerStore().BackEndIP + useReglerStore().setRoutine, t)
         },
         timestampZuDatumUhrzeit(unixTimestamp: number) { // Converts Unix Time to readable Time for Starttime
             // Erstelle ein Date-Objekt mit dem Unix-Timestamp (in Millisekunden)
