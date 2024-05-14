@@ -23,9 +23,9 @@ export interface StatusUpdate {
     //Regen: string,
     Luftfeuchtigkeit: string,
     Temperatur: string,
-    Tuer: string,
-    PSUstatus: string,
-    PSUvolt: string,
+    //Tuer: string,
+    //PSUstatus: string,
+    //PSUvolt: string,
     Wind: string,
 }
 

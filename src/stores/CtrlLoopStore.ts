@@ -35,7 +35,6 @@ export const useReglerStore = defineStore('ReglerStore', {
         HumidURL: '/air/humidity',
         TempURL: '/air/temperature',
         WindURL: '/air/fanspeed',
-        DoorURL: '/misc/door',
         PSUstatusURL: '/psu/status',
         PSUvoltURL: '/psu/voltage',
         set_STTURL: '/transcribe',
@@ -56,9 +55,8 @@ export const useReglerStore = defineStore('ReglerStore', {
                 //Regen: this.httpGetValue(this.BackEndIP + this.RainURL),
                 Luftfeuchtigkeit: this.httpGetValue(this.BackEndIP + this.HumidURL),
                 Temperatur: this.httpGetValue(this.BackEndIP + this.TempURL),
-                Tuer: this.httpGetValue(this.BackEndIP + this.DoorURL),
-                PSUstatus: this.httpGetValue(this.BackEndIP + this.PSUstatusURL),
-                PSUvolt: this.httpGetValue(this.BackEndIP + this.PSUvoltURL),
+                //PSUstatus: this.httpGetValue(this.BackEndIP + this.PSUstatusURL),
+                //PSUvolt: this.httpGetValue(this.BackEndIP + this.PSUvoltURL),
                 Wind: this.httpGetValue(this.BackEndIP + this.WindURL),
             }
             this.CurrentStatus.set('Time', kammerValues.Time)
@@ -66,9 +64,8 @@ export const useReglerStore = defineStore('ReglerStore', {
             //this.CurrentStatus.set('Regen', kammerValues.Regen)
             this.CurrentStatus.set('Luftfeuchtigkeit', kammerValues.Luftfeuchtigkeit)
             this.CurrentStatus.set('Temperatur', kammerValues.Temperatur)
-            this.CurrentStatus.set('Tuer', kammerValues.Tuer)
-            this.CurrentStatus.set('PSUstatus', kammerValues.PSUstatus)
-            this.CurrentStatus.set('PSUvolt', kammerValues.PSUvolt)
+            //this.CurrentStatus.set('PSUstatus', kammerValues.PSUstatus)
+            //this.CurrentStatus.set('PSUvolt', kammerValues.PSUvolt)
             this.CurrentStatus.set('Wind', kammerValues.Wind)
             this.History.push(this.CurrentStatus)
 
